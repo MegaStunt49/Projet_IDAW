@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 22 oct. 2024 à 12:09
+-- Généré le : mar. 22 oct. 2024 à 13:58
 -- Version du serveur : 8.3.0
 -- Version de PHP : 8.2.18
 
@@ -287,6 +287,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `ANNEE_NAISSANCE` smallint NOT NULL,
   `PSEUDO` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `est_admin` tinyint(1) NOT NULL,
   PRIMARY KEY (`LOGIN`),
   KEY `FK_A_POUR_GENRE` (`ID_SEXE`),
   KEY `FK_A_POUR_NIVEAU` (`ID_NIVEAU`)
@@ -296,12 +297,12 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`LOGIN`, `ID_NIVEAU`, `ID_SEXE`, `PASSWORD`, `ANNEE_NAISSANCE`, `PSEUDO`, `email`) VALUES
-('DupontMartin123', 1, 1, 'commun', 1983, 'Dupont', 'martin.dupont@gmail.com'),
-('jeanMichel42', 2, 1, 'pwd', 1967, 'JeanMich', 'JeanMich@el.com'),
-('suzanneMichel69', 1, 2, 'passwordCompliqué', 1995, 'suzanneMichel', 'suzanneMich@el.com'),
-('teddyRider', 3, 1, 'Judo4TheWin', 1989, 'Teddy', 'teddy@ursa.fr'),
-('TonyParCoeur', 3, 1, 'LesDécimalesDePi!', 1982, 'TroisQuatorze', 'Pierre.Pipi@pipi.pi');
+INSERT INTO `utilisateur` (`LOGIN`, `ID_NIVEAU`, `ID_SEXE`, `PASSWORD`, `ANNEE_NAISSANCE`, `PSEUDO`, `email`, `est_admin`) VALUES
+('DupontMartin123', 1, 1, 'commun', 1983, 'Dupont', 'martin.dupont@gmail.com', 0),
+('jeanMichel42', 2, 1, 'pwd', 1967, 'JeanMich', 'JeanMich@el.com', 0),
+('suzanneMichel69', 1, 2, 'passwordCompliqué', 1995, 'suzanneMichel', 'suzanneMich@el.com', 0),
+('teddyRider', 3, 1, 'Judo4TheWin', 1989, 'Teddy', 'teddy@ursa.fr', 0),
+('TonyParCoeur', 3, 1, 'LesDécimalesDePi!', 1982, 'TroisQuatorze', 'Pierre.Pipi@pipi.pi', 0);
 
 --
 -- Contraintes pour les tables déchargées
