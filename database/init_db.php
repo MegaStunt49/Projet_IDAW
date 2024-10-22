@@ -1,5 +1,5 @@
 <?php
-    require_once('../config.php');
+    require_once('config.php');
     $connectionString = "mysql:host=". _MYSQL_HOST;
     if(defined('_MYSQL_PORT'))
         $connectionString .= ";port=". _MYSQL_PORT;
@@ -13,7 +13,7 @@
     catch (PDOException $erreur) {
         echo 'Erreur : '.$erreur->getMessage();
     }
-    $request = $pdo->prepare(file_get_contents("sql/create_db.sql"));
+    $request = $pdo->prepare(file_get_contents("projet.sql"));
     $request->execute();
 
     $pdo = null;
