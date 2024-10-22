@@ -1,1 +1,4 @@
 /database/config.php
+*.yaml
+Dockerfile
+.dockerignore
