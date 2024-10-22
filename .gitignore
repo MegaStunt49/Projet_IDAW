@@ -1,4 +1,4 @@
-/backend/sql/config.php
+/backend/config.php
 *.yaml
 Dockerfile
 .dockerignore
