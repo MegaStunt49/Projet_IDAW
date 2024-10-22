@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 22 oct. 2024 à 13:58
+-- Généré le : mar. 22 oct. 2024 à 14:40
 -- Version du serveur : 8.3.0
 -- Version de PHP : 8.2.18
 
@@ -72,13 +72,33 @@ INSERT INTO `caracteristique` (`ID_CARACTERISTIQUE`, `ID_UNITE`, `LIBELLE`) VALU
 (3, 1, 'protéines'),
 (4, 1, 'sel'),
 (5, 1, 'sucre'),
-(6, 3, 'calories'),
+(6, 3, 'energie'),
 (7, 1, 'eau'),
 (8, 1, 'fibres'),
 (9, 1, 'potassium'),
 (10, 1, 'vitamine C'),
 (11, 1, 'vitamine B9'),
-(12, 1, 'vitamine B5');
+(12, 1, 'vitamine B5'),
+(13, 1, 'amidon'),
+(14, 1, 'cendres'),
+(15, 1, 'alcool'),
+(16, 1, 'acides gras'),
+(17, 1, 'ag saturés'),
+(18, 4, 'cholestérol (mg/100 g)'),
+(19, 1, 'sel'),
+(20, 4, 'fer (mg/100 g)'),
+(21, 4, 'magnésium (mg/100 g)'),
+(22, 5, 'vitamine D (µg/100 g)'),
+(23, 4, 'vitamine E (mg/100 g)'),
+(24, 5, 'vitamine K1 (µg/100 g)'),
+(25, 4, 'vitamine C (mg/100 g)'),
+(26, 4, 'vitamine B1 (mg/100 g)'),
+(27, 4, 'vitamine B2 (mg/100 g)'),
+(28, 4, 'vitamine B3 (mg/100 g)'),
+(29, 4, 'vitamine B5 (mg/100 g)'),
+(30, 4, 'vitamine B6 (mg/100 g)'),
+(31, 5, 'vitamine B9 (µg/100 g)'),
+(32, 5, 'vitamine B12 (µg/100 g)');
 
 -- --------------------------------------------------------
 
@@ -270,7 +290,9 @@ CREATE TABLE IF NOT EXISTS `unite` (
 INSERT INTO `unite` (`ID_UNITE`, `LIBELLE`) VALUES
 (1, 'g'),
 (2, 'mL'),
-(3, 'kcal');
+(3, 'kcal'),
+(4, 'mg'),
+(5, 'µg');
 
 -- --------------------------------------------------------
 
