@@ -20,14 +20,16 @@ if(isset($_SERVER['PATH_INFO'])) {
 
 function get_aliments($db, $id) {
     if(isset($id) && $id != '') {
-        $sql = "SELECT * FROM aliment WHERE ID_ALIMENT=:id"; 
+        $sql = "SELECT aliment.id_aliment, type_d_aliment.libelle FROM aliment, type_d_aliment 
+        WHERE aliment.id_aliment=:id AND aliment.id_type_aliment = type_d_aliment.id_type_aliment"; 
         $exe = $db->prepare($sql);
     
         $exe->bindParam(':id', $id);
         $exe->execute();
         $res = $exe->fetch(PDO::FETCH_OBJ);
     } else {
-        $sql = "SELECT * FROM aliment"; 
+        $sql = "SELECT aliment.id_aliment, type_d_aliment.libelle FROM aliment, type_d_aliment 
+        WHERE aliment.id_type_aliment = type_d_aliment.id_type_aliment"; 
         $exe = $db->query($sql); 
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
     }
@@ -36,7 +38,7 @@ function get_aliments($db, $id) {
 }
 
 function new_aliment($db, $libelle, $id_type) {
-    $sql = "INSERT INTO aliment (ID_TYPE_ALIMENT, LIBELLE) VALUES (:id_type, :libelle)"; 
+    $sql = "INSERT INTO aliment (id_type_aliment, libelle) VALUES (:id_type, :libelle)"; 
     $exe = $db->prepare($sql);
 
     $exe->bindParam(':id_type', $id_type);
@@ -57,7 +59,7 @@ function new_aliment($db, $libelle, $id_type) {
 }
 
 function update_aliment($db, $id, $id_type, $libelle) {
-    $sql = "UPDATE aliment SET LIBELLE = :libelle, ID_TYPE_ALIMENT = :id_type WHERE ID_ALIMENT = :id";
+    $sql = "UPDATE aliment SET libelle = :libelle, id_type_aliment = :id_type WHERE id_aliment = :id";
     $exe = $db->prepare($sql);
 
     $exe->bindParam(':id', $id);
@@ -86,7 +88,7 @@ function update_aliment($db, $id, $id_type, $libelle) {
 }
 
 function delete_aliment($db, $id) {
-    $sql = "DELETE FROM aliment WHERE ID_ALIMENT = :id"; 
+    $sql = "DELETE FROM aliment WHERE id_aliment = :id"; 
     $exe = $db->prepare($sql);
 
     $exe->bindParam(':id', $id);
