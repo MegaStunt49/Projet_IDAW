@@ -30,13 +30,27 @@ function get_users($db, $login) {
         $exe = $db->prepare($sql);
     
         $exe->bindParam(':login', $login);
-        $exe->execute();
-        $res = $exe->fetch(PDO::FETCH_OBJ);
+        if ($exe->execute()) {
+            $res = $exe->fetch(PDO::FETCH_OBJ);
+            http_response_code(201);
+        } else {
+            $res = ["error" => "Failed to fetch user."];
+            http_response_code(500);
+        }
+        
     } else {
         $sql = "SELECT utilisateur.login, niveau_sportif.libelle, sexe.libelle, utilisateur.annee_naissance, utilisateur.pseudo, utilisateur.email 
         FROM utilisateur, niveau_sportif, sexe 
-        WHERE utilisateur.id_niveau = niveau_sportif.id_niveau AND utilisateur.id_sexe = sexe.id_sexe";
+        WHERE utilisateur.id_niveau = niveau_sportif.id_niveau AND utilisateur.id_sexe = sexe.id_sexe";        
+        
         $exe = $db->query($sql); 
+        if ($exe) {
+            $res = $exe->fetch(PDO::FETCH_OBJ);
+            http_response_code(201);
+        } else {
+            $res = ["error" => "Failed to fetch users."];
+            http_response_code(500);
+        }
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
     }
     

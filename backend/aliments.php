@@ -20,17 +20,30 @@ if(isset($_SERVER['PATH_INFO'])) {
 
 function get_aliments($db, $id) {
     if(isset($id) && $id != '') {
-        $sql = "SELECT aliment.id_aliment, type_d_aliment.libelle FROM aliment, type_d_aliment 
+        $sql = "SELECT aliment.id_aliment, aliment.libelle, type_d_aliment.libelle AS type_aliment  FROM aliment, type_d_aliment 
         WHERE aliment.id_aliment=:id AND aliment.id_type_aliment = type_d_aliment.id_type_aliment"; 
         $exe = $db->prepare($sql);
     
         $exe->bindParam(':id', $id);
-        $exe->execute();
-        $res = $exe->fetch(PDO::FETCH_OBJ);
+        if ($exe->execute()) {
+            $res = $exe->fetch(PDO::FETCH_OBJ);
+            http_response_code(201);
+        } else {
+            $res = ["error" => "Failed to fetch aliment."];
+            http_response_code(500);
+        }
     } else {
-        $sql = "SELECT aliment.id_aliment, type_d_aliment.libelle FROM aliment, type_d_aliment 
-        WHERE aliment.id_type_aliment = type_d_aliment.id_type_aliment"; 
+        $sql = "SELECT aliment.id_aliment, aliment.libelle, type_d_aliment.libelle AS type_aliment FROM aliment, type_d_aliment 
+        WHERE aliment.id_type_aliment = type_d_aliment.id_type_aliment";
+
         $exe = $db->query($sql); 
+        if ($exe) {
+            $res = $exe->fetch(PDO::FETCH_OBJ);
+            http_response_code(201);
+        } else {
+            $res = ["error" => "Failed to fetch aliments."];
+            http_response_code(500);
+        }
         $res = $exe->fetchAll(PDO::FETCH_OBJ);
     }
     
