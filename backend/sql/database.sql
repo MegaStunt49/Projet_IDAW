@@ -308,8 +308,8 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `PASSWORD` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `ANNEE_NAISSANCE` smallint NOT NULL,
   `PSEUDO` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `est_admin` tinyint(1) NOT NULL,
+  `EMAIL` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `EST_ADMIN` tinyint(1) NOT NULL,
   PRIMARY KEY (`LOGIN`),
   KEY `FK_A_POUR_GENRE` (`ID_SEXE`),
   KEY `FK_A_POUR_NIVEAU` (`ID_NIVEAU`)
@@ -319,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`LOGIN`, `ID_NIVEAU`, `ID_SEXE`, `PASSWORD`, `ANNEE_NAISSANCE`, `PSEUDO`, `email`, `est_admin`) VALUES
+INSERT INTO `utilisateur` (`LOGIN`, `ID_NIVEAU`, `ID_SEXE`, `PASSWORD`, `ANNEE_NAISSANCE`, `PSEUDO`, `EMAIL`, `EST_ADMIN`) VALUES
 ('DupontMartin123', 1, 1, 'commun', 1983, 'Dupont', 'martin.dupont@gmail.com', 0),
 ('jeanMichel42', 2, 1, 'pwd', 1967, 'JeanMich', 'JeanMich@el.com', 0),
 ('suzanneMichel69', 1, 2, 'passwordCompliqué', 1995, 'suzanneMichel', 'suzanneMich@el.com', 0),
