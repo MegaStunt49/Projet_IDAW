@@ -4,4 +4,3 @@
     $request->execute();
 
     $pdo = null;
-?>
