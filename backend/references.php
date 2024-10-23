@@ -10,14 +10,13 @@ function setHeaders() {
     header('Content-type: application/json; charset=utf-8');
 }
 
+$inputArray = [
+    0 => '',
+    1 => '',
+];
 if(isset($_SERVER['PATH_INFO'])) {
     $cleanedString = trim($_SERVER['PATH_INFO'], '/');
     $inputArray = explode('/', $cleanedString);
-} else {
-    $inputArray = [
-        0 => '',
-        1 => ''
-    ];
 }
 
 function get_niveau($db, $id) {
@@ -39,7 +38,7 @@ function get_niveau($db, $id) {
 
         $exe = $db->query($sql); 
         if ($exe) {
-            $res = $exe->fetch(PDO::FETCH_OBJ);
+            $res = $exe->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         } else {
             $res = ["error" => "Failed to fetch niveaux."];
@@ -69,7 +68,7 @@ function get_sexe($db, $id) {
         
         $exe = $db->query($sql); 
         if ($exe) {
-            $res = $exe->fetch(PDO::FETCH_OBJ);
+            $res = $exe->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         } else {
             $res = ["error" => "Failed to fetch sexes."];
@@ -99,7 +98,7 @@ function get_unite($db, $id) {
         
         $exe = $db->query($sql); 
         if ($exe) {
-            $res = $exe->fetch(PDO::FETCH_OBJ);
+            $res = $exe->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         } else {
             $res = ["error" => "Failed to fetch unites."];
@@ -133,7 +132,7 @@ function get_caracteristique($db, $id) {
         
         $exe = $db->query($sql); 
         if ($exe) {
-            $res = $exe->fetch(PDO::FETCH_OBJ);
+            $res = $exe->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         } else {
             $res = ["error" => "Failed to fetch users."];
@@ -146,21 +145,26 @@ function get_caracteristique($db, $id) {
 
 switch($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
+        setHeaders();
         switch($inputArray[0]) {
             case 'caracteristique':
-                $result = get_caracteristique($pdo, $inputArray[1]);
+                $result = get_caracteristique($pdo, $inputArray[1] ?? '');
+                echo json_encode($result);
                 exit;
 
             case 'unite':
-                $result = get_unite($pdo, $inputArray[1]);
+                $result = get_unite($pdo, $inputArray[1] ?? '');
+                echo json_encode($result);
                 exit;
 
             case 'sexe':
-                $result = get_sexe($pdo, $inputArray[1]);
+                $result = get_sexe($pdo, $inputArray[1] ?? '');
+                echo json_encode($result);
                 exit;
 
             case 'niveau':
-                $result = get_niveau($pdo, $inputArray[1]);
+                $result = get_niveau($pdo, $inputArray[1] ?? '');
+                echo json_encode($result);
                 exit;
 
             default:
@@ -168,8 +172,6 @@ switch($_SERVER["REQUEST_METHOD"]) {
                 exit(json_encode(["error" => "This reference does not exist"]));
             
         }
-        setHeaders();
-        echo json_encode($result);
         exit;
         
     default:
