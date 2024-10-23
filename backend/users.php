@@ -51,7 +51,6 @@ function get_users($db, $login) {
             $res = ["error" => "Failed to fetch users."];
             http_response_code(500);
         }
-        $res = $exe->fetchAll(PDO::FETCH_OBJ);
     }
     
     return $res;

@@ -44,7 +44,6 @@ function get_aliments($db, $id) {
             $res = ["error" => "Failed to fetch aliments."];
             http_response_code(500);
         }
-        $res = $exe->fetchAll(PDO::FETCH_OBJ);
     }
     
     return $res;
