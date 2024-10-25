@@ -45,7 +45,7 @@ function get_users($db, $login) {
         
         $exe = $db->query($sql); 
         if ($exe) {
-            $res = $exe->fetch(PDO::FETCH_OBJ);
+            $res = $exe->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         } else {
             $res = ["error" => "Failed to fetch users."];
@@ -88,8 +88,8 @@ function new_user($db, $login, $id_niveau, $id_sexe, $password, $annee_naissance
 }
 
 function update_user($db, $login, $id_niveau, $password, $pseudo, $email) {
-    $sql = "UPDATE users SET login = :login, id_niveau = :id_niveau, password = :password, pseudo = :pseudo, email = :email
-    WHERE id = :id";
+    $sql = "UPDATE utilisateur SET id_niveau = :id_niveau, password = :password, pseudo = :pseudo, email = :email
+    WHERE login = :login";
     $exe = $db->prepare($sql);
 
     $exe->bindParam(':login', $login);
