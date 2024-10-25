@@ -7,20 +7,19 @@ function setHeaders() {
     header('Content-type: application/json; charset=utf-8');
 }
 
+$inputArray = [
+    0 => '',
+    1 => '',
+    2 => ''
+];
 if(isset($_SERVER['PATH_INFO'])) {
     $cleanedString = trim($_SERVER['PATH_INFO'], '/');
     $inputArray = explode('/', $cleanedString);
-} else {
-    $inputArray = [
-        0 => '',
-        1 => '',
-        2 => ''
-    ];
 }
 
 function get_repas_by_id($db, $id) {
-    if(isset($login) && $login != '') {
-        $sql = "SELECT * FROM repas WHERE repas.id=:id"; 
+    if(isset($id) && $id != '') {
+        $sql = "SELECT * FROM repas WHERE repas.id_repas=:id"; 
         $exe = $db->prepare($sql);
     
         $exe->bindParam(':id', $id);
@@ -36,7 +35,7 @@ function get_repas_by_id($db, $id) {
 
         $exe = $db->query($sql); 
         if ($exe) {
-            $res = $exe->fetch(PDO::FETCH_OBJ);
+            $res = $exe->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         } else {
             $res = ["error" => "Failed to fetch repas."];
@@ -53,7 +52,7 @@ function get_repas_by_login($db, $login) {
 
     $exe->bindParam(':login', $login);
     if ($exe->execute()) {
-        $res = $exe->fetch(PDO::FETCH_OBJ);
+        $res = $exe->fetchAll(PDO::FETCH_OBJ);
         http_response_code(201);
     } else {
         $res = ["error" => "Failed to fetch repas."];
@@ -141,13 +140,15 @@ switch($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
         switch($inputArray[0]) {
             case 'id':
-                $result = get_repas_by_id($pdo, $inputArray[1]);
+                $result = get_repas_by_id($pdo, $inputArray[1] ?? '');
                 setHeaders();
                 echo json_encode($result);
+                exit;
             case 'login':
-                $result = get_repas_by_login($pdo, $inputArray[1]);
+                $result = get_repas_by_login($pdo, $inputArray[1] ?? '');
                 setHeaders();
                 echo json_encode($result);
+                exit;
             default:
                 http_response_code(405);
                 exit(json_encode(["error" => "Method Not Allowed"]));
@@ -155,17 +156,17 @@ switch($_SERVER["REQUEST_METHOD"]) {
         exit;
         
     case 'POST':
-        $result = new_repas($pdo, $inputArray[0], $inputArray[1]);
+        $result = new_repas($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '');
         echo json_encode($result);
         exit;
         
     case 'PUT':
-        $result = update_repas($pdo, $inputArray[0], $inputArray[1], $inputArray[2]);
+        $result = update_repas($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '', $inputArray[2] ?? '');
         echo json_encode($result);
         exit;
     
     case 'DELETE':
-        $result = delete_repas($pdo, $inputArray[0]);
+        $result = delete_repas($pdo, $inputArray[0] ?? '');
         echo json_encode($result);
         exit;
         
