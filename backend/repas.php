@@ -75,7 +75,7 @@ function new_repas($db, $login, $date_heure) {
             'id' => $new_repas_id,
             'login' => $login,
             'date_heure' => $date_heure];
-        http_response_code(201);
+        http_response_code(200);
     } else {
         $res = ["error" => "Failed to create repas."];
         http_response_code(500);
