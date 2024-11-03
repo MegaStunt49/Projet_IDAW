@@ -15,10 +15,10 @@
             $num = count($data);
             $row++;
             echo "<tr>";
-            if (!in_array($data[0],$nomGroup)){
+            if (!in_array($data[0],$nomGroup) && strlen($data[0])>0){
                 $nomGroup[] = $data[0];
             }
-            if (!in_array($data[1],$nomAlim)){
+            if (!in_array($data[1],$nomAlim) && strlen($data[1])>0){
                 $nomAlim[] = $data[1];
             }
             for ($c=0; $c < $num; $c++) {
@@ -32,14 +32,14 @@
         echo "<p>".$num2."</p>";
         for ($c=0; $c < $num2; $c++) {
             echo "<p>".$nomGroup[$c]."</p>";
-
         }
         $num3 = count($nomAlim);
         echo "<p>".$num3."</p>";
-        echo "<p>".$nomAlim[0]."</p>";
-        echo "<p>".$nomAlim[3150]."</p>";
-        echo "<p>".$nomAlim[3170]."</p>";
-        echo "<p>".$nomAlim[$num3-1]."</p>";
+        for ($c=0; $c < $num3; $c++) {
+            if (!ctype_alpha($nomAlim[$c][0])){
+                echo "<p>".$nomAlim[$c]."</p>";
+            }
+        }
         fclose($handle);
     }
 
