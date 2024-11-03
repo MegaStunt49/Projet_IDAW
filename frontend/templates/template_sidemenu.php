@@ -19,6 +19,6 @@
             echo ('<a' . $CurrentPageString . ' href="' . $pageId . '.php">' . $titre . '</a>');
         }
         
-        echo "</div><script>function bigImg(x) {x.style.width = \"250px\";}function normalImg(x) {x.style.width = \"10px\";}</script>";
+        echo "</div><script>function openSM(x) {x.style.width = \"250px\";}function closeSM(x) {x.style.width = \"10px\";}</script>";
     }
 ?>
