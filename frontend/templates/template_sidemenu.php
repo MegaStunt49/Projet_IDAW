@@ -1,11 +1,10 @@
 <?php
     function renderSideMenuToHTML($currentPageId) {
         $mymenu = array(
-            'accueil' => 'Accueil' ,
-            'cv' => 'CV' ,
-            'projets' => 'Projets',
-            'infos_techniques' => 'Infos',
-            'contact' => 'Contact'
+            'index' => 'Accueil' ,
+            'profil' => 'Profil' ,
+            'aliments' => 'Aliments',
+            'journal' => 'Journal'
         );
         
         echo "<div class=\"sidemenu\" onmouseenter=\"openSM(this)\" onmouseleave=\"closeSM(this)\">";
