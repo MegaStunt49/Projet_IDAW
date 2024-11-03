@@ -13,6 +13,7 @@
             $CurrentPageString = "";
             if ($currentPageId == $pageId){
                 $CurrentPageString = ' id="currentpage"';
+                $pageId = "#";
             }
             $titre = $pageParameters;
             echo ('<a' . $CurrentPageString . ' href="' . $pageId . '.php">' . $titre . '</a>');
