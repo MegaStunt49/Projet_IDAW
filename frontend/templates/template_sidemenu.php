@@ -22,6 +22,6 @@
             echo ('<a' . $CurrentPageString . ' href="' . $page . '">' . $titre . '</a>');
         }
         
-        echo "</div><script>function openSM(x) {x.style.width = \"250px\";}function closeSM(x) {x.style.width = \"10px\";}</script>";
+        echo "</div><script>function openSM(x) {x.style.width = \"250px\";}function closeSM(x) {x.style.width = \"20px\";}</script>";
     }
 ?>
