@@ -7,4 +7,8 @@
 
 
     require_once('templates/template_header.php');
+
+    $currentPageId = "accueil";
+
     require_once('templates/template_sidemenu.php');
+    renderSideMenuToHTML($currentPageId);
