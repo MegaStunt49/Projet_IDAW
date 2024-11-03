@@ -13,7 +13,7 @@
             $CurrentPageString = "";
             if ($currentPageId == $pageId){
                 $CurrentPageString = ' id="currentpage"';
-                $page = "#";
+                $page = "";
             }
             else {
                 $page = $pageId . ".php";
