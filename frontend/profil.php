@@ -8,7 +8,7 @@
 
     require_once('templates/template_header.php');
 
-    $currentPageId = "index";
+    $currentPageId = "profil";
 
     require_once('templates/template_sidemenu.php');
     renderSideMenuToHTML($currentPageId);
