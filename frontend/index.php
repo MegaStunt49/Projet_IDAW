@@ -6,4 +6,5 @@
     }
 
 
-    require_once('template_header.php');
+    require_once('templates/template_header.php');
+    require_once('templates/template_sidemenu.php');
