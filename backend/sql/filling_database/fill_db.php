@@ -19,33 +19,55 @@
             $num = count($data);
             $row++;
             echo "<tr>";
+            $idParam = "NULL";
+            $idParam3 = "NULL";
             if (!in_array($data[0],$nomGroup) && strlen($data[0])>0){
                 $nomGroup[] = $data[0];
                 $requestID = $pdo->query("SELECT id_type_aliment FROM type_d_aliment ORDER BY `type_d_aliment`.`id_type_aliment` DESC");
                 $dataid = $requestID->fetch(PDO::FETCH_OBJ);
-                $requestPost = $pdo->prepare("INSERT INTO type_d_aliment (id_type_aliment, libelle) VALUES ('".($dataid->id_type_aliment + 1)."', '".$data[0]."')");
-                $requestPost->execute();
+                $exe = $pdo->prepare("INSERT INTO type_d_aliment (id_type_aliment, libelle) VALUES (:id_type, :libelle)");
+
+                $idParam3 = ($dataid->id_type_aliment + 1);
+
+                $exe->bindParam(':id_type', $idParam3);
+                $exe->bindParam(':libelle', $data[0]);
+
+                $exe->execute();
             }
             if (!in_array($data[1],$nomAlim) && strlen($data[1])>0){
                 $nomAlim[] = $data[1];
                 $corGroup[] = $data[0];
                 $requestID = $pdo->query("SELECT id_type_aliment FROM type_d_aliment WHERE libelle = '".$data[0]."'");
                 $dataid = $requestID->fetch(PDO::FETCH_OBJ);
-                $sql = "INSERT INTO aliment (id_type_aliment, libelle) VALUES ('".$dataid->id_type_aliment."', '".$data[1]."')"; 
+                $sql = "INSERT INTO aliment (id_type_aliment, libelle) VALUES (:id_type, :libelle)"; 
                 $exe = $pdo->prepare($sql);
+
+                $idParam = $dataid->id_type_aliment;
+
+                $exe->bindParam(':id_type', $idParam);
+                $exe->bindParam(':libelle', $data[1]);
+
                 $exe->execute();
             }
-            // $requestIDal = $pdo->query("SELECT id_aliment FROM aliment WHERE libelle = '".$data[1]."'");
-            // $dataidal = $requestIDal->fetch(PDO::FETCH_OBJ);
+            $requestIDal = $pdo->prepare("SELECT id_aliment FROM aliment WHERE libelle = :libelle");
+            $requestIDal->bindParam(':libelle', $data[1]);
+            $requestIDal->execute();
+            $dataidal = $requestIDal->fetch(PDO::FETCH_OBJ);
+            $idParam1 = $dataidal->id_aliment;
             for ($c=2; $c < $num; $c++) {
                 echo "<td>".$data[$c]."</td>";
-            //     if (ctype_digit($data[$c][0])){
-            //         $requestIDcar = $pdo->query("SELECT id_caracteristique FROM caracteristique WHERE libelle = '".$header[$c]."'");
-            //         $dataidcar = $requestIDcar->fetch(PDO::FETCH_OBJ);
-            //         $sql = "INSERT INTO contient_pour_100g (id_aliment, id_caracteristique, libelle) VALUES ('".$dataidal->id_aliment."', '".$dataidcar->id_caracteristique."', '".$data[$c]."')"; 
-            //         $exe = $pdo->prepare($sql);
-            //         $exe->execute();
-            //     }
+                if ($data[$c]!="" && ctype_digit($data[$c][0])){
+                    $requestIDcar = $pdo->prepare("SELECT id_caracteristique FROM caracteristique WHERE libelle = '".$header[$c]."'");
+                    $requestIDcar->execute();
+                    $dataidcar = $requestIDcar->fetch(PDO::FETCH_OBJ);
+                    $sql = "INSERT INTO contient_pour_100g (id_aliment, id_caracteristique, quantite) VALUES ( :id, :id_caracteristique, :quantite)"; 
+                    $exe = $pdo->prepare($sql);
+                    $idParam2 = $dataidcar->id_caracteristique;
+                    $exe->bindParam(':id', $idParam1);
+                    $exe->bindParam(':id_caracteristique', $idParam2);
+                    $exe->bindParam(':quantite', $data[$c]);
+                    $exe->execute();
+                }
             }
             echo "</tr>";
         }

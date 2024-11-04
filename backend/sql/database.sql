@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `aliment`;
 CREATE TABLE IF NOT EXISTS `aliment` (
   `ID_ALIMENT` int NOT NULL AUTO_INCREMENT,
   `ID_TYPE_ALIMENT` int NOT NULL,
-  `LIBELLE` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `LIBELLE` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`ID_ALIMENT`),
   KEY `FK_A_POUR_TYPE` (`ID_TYPE_ALIMENT`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -98,7 +98,8 @@ INSERT INTO `caracteristique` (`ID_CARACTERISTIQUE`, `ID_UNITE`, `LIBELLE`) VALU
 (29, 4, 'vitamine B5 (mg/100 g)'),
 (30, 4, 'vitamine B6 (mg/100 g)'),
 (31, 5, 'vitamine B9 (µg/100 g)'),
-(32, 5, 'vitamine B12 (µg/100 g)');
+(32, 5, 'vitamine B12 (µg/100 g)'),
+(33, 4, 'potassium (mg/100 g)');
 
 -- --------------------------------------------------------
 
@@ -255,7 +256,7 @@ INSERT INTO `sexe` (`ID_SEXE`, `LIBELLE`) VALUES
 DROP TABLE IF EXISTS `type_d_aliment`;
 CREATE TABLE IF NOT EXISTS `type_d_aliment` (
   `ID_TYPE_ALIMENT` int NOT NULL,
-  `LIBELLE` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `LIBELLE` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`ID_TYPE_ALIMENT`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
