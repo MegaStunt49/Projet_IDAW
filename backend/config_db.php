@@ -4,3 +4,5 @@
     define('_MYSQL_DBNAME','projet');
     define('_MYSQL_USER','root');
     define('_MYSQL_PASSWORD','');
+
+    define('_APIKEY', '^-SLMurFSX"%sm7');

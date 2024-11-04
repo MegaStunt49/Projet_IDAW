@@ -18,4 +18,7 @@
     if(isset($_GET['error'])) {
         echo ('<p style="color:red;">'.$_GET['error'].'</p>');
     }
+    if(isset($_GET['log'])) {
+        echo ('<p style="color:green;">'.$_GET['log'].'</p>');
+    }
 ?>

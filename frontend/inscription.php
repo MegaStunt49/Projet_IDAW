@@ -22,7 +22,7 @@ require_once("config.php");
         </tr>
         <tr>
             <th>Année de naissance :</th>
-            <td><input type="number" id="year" name="year" min="1900" max="2100" required></td>
+            <td><input type="number" id="annee_naissance" name="annee_naissance" min="1900" max="2100" required></td>
         </tr>
         <tr>
             <th>Niveau Sportif :</th>
@@ -46,6 +46,7 @@ require_once("config.php");
 </form>
 <script src="js/inscription.js"></script>
 <?php
+    echo '<div id="config" data-api-prefix="'. _PREFIX . '"></div>';
     if(isset($_GET['error'])) {
         echo ('<p style="color:red;">'.$_GET['error'].'</p>');
     }

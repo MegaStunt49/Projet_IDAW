@@ -8,12 +8,14 @@
         $tryPwd=$_POST['password'];
 
         $url = _PREFIX . "/backend/auth.php";
+        $apiKey = _APIKEY;
         
         $curl = curl_init($url);
         
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json'
+            "Authorization: Bearer $apiKey",
+            "Content-Type: application/json"
         ]);
         curl_setopt($curl, CURLOPT_POST, true);  // Use POST instead of GET
         $data = json_encode(['login' => $tryLogin, 'password' => $tryPwd]);
