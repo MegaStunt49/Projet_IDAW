@@ -1,3 +1,4 @@
+#!/bin/bash
 # Base URL of the API (adjust as necessary)
 BASE_URL="http://localhost/backend/repas.php"
 
