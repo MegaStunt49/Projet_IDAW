@@ -36,7 +36,7 @@ function connect_user($db, $login, $pwd) {
     return false;
 }
 
-function is_connected($db) {
+function is_connected() {
     session_start();
     return isset($_SESSION['login']);
 }
@@ -59,11 +59,39 @@ function is_admin($db) {
     }
 }
 
+setHeaders();
+
 switch($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
-        $result = get_users($pdo, $inputArray[0]);
-        setHeaders();
-        echo json_encode($result);
+        switch($inputArray[0]) {
+            case 'is-connected':
+                $result = is_connected();
+                echo json_encode(["is_connected" => $result]);
+                exit;
+
+            case 'is-admin':
+                $result = is_admin($pdo);
+                echo json_encode(["is_admin" => $result]);
+                exit;
+
+            default:
+                http_response_code(404);
+                echo json_encode(["error" => "Unknown Request"]);
+                exit;
+        }
+        exit;
+    
+    case 'POST':
+        if (isset($inputArray[0], $inputArray[1])) {
+            $login = $inputArray[0];
+            $pwd = $inputArray[1];
+            $result = connect_user($pdo, $login, $pwd);
+            echo json_encode(["connected" => $result]);
+        } else {
+            http_response_code(400);
+            echo json_encode(["error" => "Wrong password or login",
+            "connected" => false]);
+        }
         exit;
         
     default:
