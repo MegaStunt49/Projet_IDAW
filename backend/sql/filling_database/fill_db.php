@@ -63,9 +63,10 @@
                     $sql = "INSERT INTO contient_pour_100g (id_aliment, id_caracteristique, quantite) VALUES ( :id, :id_caracteristique, :quantite)"; 
                     $exe = $pdo->prepare($sql);
                     $idParam2 = $dataidcar->id_caracteristique;
+                    $Param4 = floatval(str_replace(",",".",$data[$c]));
                     $exe->bindParam(':id', $idParam1);
                     $exe->bindParam(':id_caracteristique', $idParam2);
-                    $exe->bindParam(':quantite', $data[$c]);
+                    $exe->bindParam(':quantite', $Param4);
                     $exe->execute();
                 }
             }
