@@ -306,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `LOGIN` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `ID_NIVEAU` int NOT NULL,
   `ID_SEXE` int NOT NULL,
-  `PASSWORD` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `PASSWORD` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `ANNEE_NAISSANCE` smallint NOT NULL,
   `PSEUDO` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `EMAIL` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
