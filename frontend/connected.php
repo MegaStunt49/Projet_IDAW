@@ -10,7 +10,7 @@
     if(isset($_POST['login']) && isset($_POST['password'])) {
         $tryLogin=$_POST['login'];
         $tryPwd=$_POST['password'];
-        
+        $successfullyLogged = true;
     } 
     else
         $errorText = "Merci d'utiliser le formulaire de login";

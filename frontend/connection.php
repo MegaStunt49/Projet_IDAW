@@ -9,15 +9,6 @@
             <td><input type="password" name="password"></td>
         </tr>
         <tr>
-            <th>Style :</th>
-            <td>
-                <select name="css">
-                    <option value="style1">style1</option>
-                    <option value="style2">style2</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
             <th></th>
             <td><input type="submit" value="Se connecter..." /></td>
         </tr>
