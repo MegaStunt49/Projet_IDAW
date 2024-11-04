@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 22 oct. 2024 à 14:40
+-- Généré le : lun. 04 nov. 2024 à 14:10
 -- Version du serveur : 8.3.0
 -- Version de PHP : 8.2.18
 
@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `aliment`;
 CREATE TABLE IF NOT EXISTS `aliment` (
   `ID_ALIMENT` int NOT NULL AUTO_INCREMENT,
   `ID_TYPE_ALIMENT` int NOT NULL,
-  `LIBELLE` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `LIBELLE` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`ID_ALIMENT`),
   KEY `FK_A_POUR_TYPE` (`ID_TYPE_ALIMENT`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
