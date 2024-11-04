@@ -28,7 +28,6 @@
     else {
         session_start();
         $_SESSION['login'] = $tryLogin;
-        $_SESSION['password'] = $tryPwd;
         header('Location: index.php');
     }
 ?>
