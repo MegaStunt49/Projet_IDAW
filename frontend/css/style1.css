@@ -4,7 +4,7 @@ body {
   
   .sidemenu {
     height: 100%;
-    width: 20px;
+    width: 25px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -23,16 +23,41 @@ body {
     display: block;
     transition: 0.3s;
   }
+
+  .sidemenu p {
+    padding: 8px 8px 8px 32px;
+    margin-top: 0;
+  }
   
   .sidemenu a:hover {
     color: #f1f1f1;
   }
-  .sidemenu .closeSideMenu {
+  .sidemenu .deconnexion {
     position: absolute;
     bottom: 70px;
     right: 25px;
     font-size: 20px;
     margin-left: 50px;
+  }
+  .sidemenu .openSideMenu {
+    position: absolute;
+    visibility: visible;
+    top: 0;
+    right: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f1f1f1;
+    transition: 0s;
+  }
+  .sidemenu .closeSideMenu {
+    position: absolute;
+    visibility: hidden;
+    top: 0;
+    right: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f1f1f1;
+    transition: 0s;
   }
 
 #currentpage {
