@@ -15,7 +15,7 @@
     else
         $errorText = "Merci d'utiliser le formulaire de login";
     if(!$successfullyLogged) {
-        header('Location: login.php?error='.$errorText);
+        header('Location: connection.php?error='.$errorText);
     } 
     else {
         session_start();
