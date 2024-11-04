@@ -21,7 +21,7 @@
             $titre = $pageParameters;
             echo ('<a' . $CurrentPageString . ' href="' . $page . '">' . $titre . '</a>');
         }
-        
+        echo ('<a href="deconnection.php" class="closeSideMenu">Déconnection</a>');
         echo "</div><script>function openSM(x) {x.style.width = \"250px\";}function closeSM(x) {x.style.width = \"20px\";}</script>";
     }
 ?>
