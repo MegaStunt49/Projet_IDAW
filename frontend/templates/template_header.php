@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="icon" href="imgs/place_holder_icon.png">
+        <link rel="icon" href="imgs/oeuf.png">
         <title>iMangerMieux</title>
         <?php 
             if (!isset($_COOKIE["style"])){
