@@ -18,7 +18,7 @@
             . $_POST['login'] . "/" 
             . $_POST['niveau'] . "/" 
             . $_POST['sexe'] . "/" 
-            . $_POST['password'] . "/" 
+            . password_hash($_POST['password'], PASSWORD_DEFAULT) . "/" 
             . $_POST['annee_naissance'] . "/" 
             . $_POST['pseudo'] . "/" 
             . $_POST['mail'];

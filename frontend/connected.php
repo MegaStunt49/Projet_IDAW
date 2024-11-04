@@ -7,7 +7,7 @@
         $tryLogin=$_POST['login'];
         $tryPwd=$_POST['password'];
 
-        $url = _PREFIX . "/backend/auth.php";
+        $url = _PREFIX . "/backend/auth.php/" . $tryLogin . "/" . $tryPwd;
         $apiKey = _APIKEY;
         
         $curl = curl_init($url);
@@ -17,9 +17,7 @@
             "Authorization: Bearer $apiKey",
             "Content-Type: application/json"
         ]);
-        curl_setopt($curl, CURLOPT_POST, true);  // Use POST instead of GET
-        $data = json_encode(['login' => $tryLogin, 'password' => $tryPwd]);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl, CURLOPT_POST, true);
 
         $response = curl_exec($curl);
         
