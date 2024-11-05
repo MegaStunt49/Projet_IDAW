@@ -1,3 +1,6 @@
+<?php
+    require_once('templates/template_header.php');
+?>
 <form id="login_form" action="connected.php" method="POST">
     <table>
         <tr>
