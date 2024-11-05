@@ -1,6 +1,5 @@
 <?php
     require_once("config.php");
-    require_once('templates/template_header.php');
     $login = "anonymous";
     $errorText = "";
     $successfullyLogged = false;
