@@ -17,7 +17,7 @@
     <div class="titre">
         <h1>Profil</h1>
     </div>
-    <div class="contenu">
+    <div class="contenu Profil">
         <div class="login">
             <h2>Login</h2>
         </div>
