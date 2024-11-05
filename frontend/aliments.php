@@ -68,8 +68,16 @@
                         data: null,
                         title: 'Actions',
                         render: function (data, type, row) {
-                            return `<button type="button" class="btn btn-danger" onclick="delete_entry(this)">Delete</button>
-                                    <button type="button" class="btn btn-danger" onclick="update_entry(this)">Update</button>`;
+                            return `<button type="button" class="btn btn-danger" onclick="delete_entry(this)">
+                                        <span class="transition bg-red"></span>
+                                        <span class="gradient"></span>
+                                        <span class="label">Delete</span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger" onclick="update_entry(this)">
+                                        <span class="transition bg-blue"></span>
+                                        <span class="gradient"></span>
+                                        <span class="label">Update</span>
+                                    </button>`;
                         }
                     }
                 ]

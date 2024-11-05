@@ -47,7 +47,16 @@ Creates a new user record in the database.
 **Request**
 
 - **Method**: `POST`
-- **Path Parameters**: Fill every field of the new user (e.g., `prefix/users.php/login/id_niveau/id_sexe/password/annee_naissance/pseudo/email`).
+- **Headers**: `Content-Type: application/json`
+- **Path**: `prefix/users.php`
+- **Body Parameters**: JSON object with the following fields:
+    - login: User's login (string)
+    - id_niveau: User's level ID (integer)
+    - id_sexe: User's gender ID (integer)
+    - password: User's password (hashed)
+    - annee_naissance: User's birth year (integer)
+    - pseudo: User's pseudonym (string)
+    - email: User's email address (string)
 
 **Response**
 
@@ -57,7 +66,18 @@ Creates a new user record in the database.
 **Example Request**
 
 ```http
-POST /prefix/users.php/test/2/1/azerty/2003/tester/test@test.com HTTP/1.1
+    POST /prefix/users.php HTTP/1.1
+    Content-Type: application/json
+
+    {
+        "login": "test",
+        "id_niveau": 2,
+        "id_sexe": 1,
+        "password": "azerty",
+        "annee_naissance": 2003,
+        "pseudo": "tester",
+        "email": "test@test.com"
+    }
 ```
 
 **Example Response**
@@ -67,12 +87,11 @@ POST /prefix/users.php/test/2/1/azerty/2003/tester/test@test.com HTTP/1.1
     "login": "test",
     "id_niveau": 2,
     "id_sexe": 1,
-    "password": "azerty",
+    "password": "hashed_password",
     "annee_naissance": 2003,
     "pseudo": "tester",
     "email": "test@test.com"
 }
-
 ```
 
 #### PUT users
@@ -81,8 +100,15 @@ Updates an existing user record based on the provided login.
 
 **Request**
 
-- **Method**: `PUT`
-- **Path Parameters**: Login identifier for the user to modify along with new fields value (e.g., `prefix/users.php/login/id_niveau/password/pseudo/email`).
+- **Method**: `POST`
+- **Headers**: `Content-Type: application/json`
+- **Path**: `prefix/users.php`
+- **Body Parameters**: JSON object with the following fields (all optional except login):
+    - login: User's login (string)
+    - id_niveau: User's level ID (integer)
+    - password: User's password (hashed)
+    - pseudo: User's pseudonym (string)
+    - email: User's email address (string)
 
 **Response**
 
@@ -93,7 +119,15 @@ Updates an existing user record based on the provided login.
 **Example Request**
 
 ```http
-PUT /prefix/users.php/test/3/azerty/tester-changed/test@test.com HTTP/1.1
+PUT /prefix/users.php/test HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_niveau": 3,
+    "password": "new_password",
+    "pseudo": "tester-changed",
+    "email": "test@test.com"
+}
 ```
 
 **Example Response**
@@ -102,7 +136,7 @@ PUT /prefix/users.php/test/3/azerty/tester-changed/test@test.com HTTP/1.1
 {
     "login": "test",
     "id_niveau": 3,
-    "password": "azerty",
+    "password": "hashed_new_password",
     "pseudo": "tester-changed",
     "email": "test@test.com"
 }
