@@ -131,13 +131,25 @@ switch($_SERVER["REQUEST_METHOD"]) {
         exit;
         
     case 'POST':
-        $result = new_aliment($pdo, $inputArray[0], $inputArray[1]);
-        echo json_encode($result);
+        $postData = json_decode(file_get_contents("php://input"), true);
+        if (isset($postData['libelle']) && isset($postData['id_type'])) {
+            $result = new_aliment($pdo, $postData['libelle'], $postData['id_type']);
+            echo json_encode($result);
+        } else {
+            http_response_code(400);
+            echo json_encode(["error" => "Invalid data provided."]);
+        }
         exit;
-        
+
     case 'PUT':
-        $result = update_aliment($pdo, $inputArray[0], $inputArray[1], $inputArray[2]);
-        echo json_encode($result);
+        $putData = json_decode(file_get_contents("php://input"), true);
+        if (isset($inputArray[0], $putData['id_type'], $putData['libelle'])) {
+            $result = update_aliment($pdo, $inputArray[0], $putData['id_type'], $putData['libelle']);
+            echo json_encode($result);
+        } else {
+            http_response_code(400);
+            echo json_encode(["error" => "Invalid data provided."]);
+        }
         exit;
     
     case 'DELETE':

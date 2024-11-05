@@ -211,26 +211,36 @@ Creates a new aliment record in the database.
 **Request**
 
 - **Method**: `POST`
-- **Path Parameters**: libelle: Name of the aliment, id_type: Aliment type ID (e.g., `prefix/aliments.php/libelle/id_type`).
+- **Path**: prefix/aliments.php
+- **Body Parameters (JSON)**:
+
+    libelle: Name of the aliment (string).
+    id_type: Aliment type ID (integer).
 
 **Response**
 
-- **Code 200**: JSON array of user data if successful.
+- **Code 201**: JSON array of user data if successful.
 - **Code 500**: Error message if fetching fails.
 
 **Example Request**
 
 ```http
-POST /prefix/aliments.php/banana/2 HTTP/1.1
+POST /prefix/aliments.php HTTP/1.1
+Content-Type: application/json
+
+{
+    "libelle": "Banana",
+    "id_type": 2
+}
 ```
 
 **Example Response**
 
 ```json
-POST /aliments HTTP/1.1
 {
-    "libelle": "Banana",
-    "id_type": 2
+    "id": 5,
+    "id_type_aliment": 2,
+    "libelle": "Banana"
 }
 ```
 
@@ -241,7 +251,12 @@ Updates an existing aliment record based on the provided `id`.
 **Request**
 
 - **Method**: `PUT`
-- **Path Parameters**: id: Aliment ID, id_type: Updated aliment type ID, libelle: Updated aliment name (e.g., `prefix/aliments.php/id/id_type/libelle`).
+- **Path**: prefix/aliments.php/id
+- **Path Parameters**: id - Aliment ID (integer).
+- **Body Parameters (JSON)**:
+
+    libelle: Updated aliment name (string).
+    id_type: Updated aliment type ID (integer).
 
 **Response**
 
@@ -252,7 +267,13 @@ Updates an existing aliment record based on the provided `id`.
 **Example Request**
 
 ```http
-PUT /prefix/aliments.php/1/3/potato HTTP/1.1
+PUT /prefix/aliments.php/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "libelle": "potato",
+    "id_type": 3
+}
 ```
 
 **Example Response**
