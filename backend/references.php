@@ -19,6 +19,36 @@ if(isset($_SERVER['PATH_INFO'])) {
     $inputArray = explode('/', $cleanedString);
 }
 
+function get_type_aliment($db, $id) {
+    if(isset($id) && $id != '') {
+        $sql = "SELECT * FROM type_d_aliment WHERE type_d_aliment.id_type_aliment=:id"; 
+        $exe = $db->prepare($sql);
+    
+        $exe->bindParam(':id', $id);
+
+        if ($exe->execute()) {
+            $res = $exe->fetch(PDO::FETCH_OBJ);
+            http_response_code(201);
+        } else {
+            $res = ["error" => "Failed to fetch type."];
+            http_response_code(500);
+        }
+    } else {
+        $sql = "SELECT * FROM type_d_aliment";
+
+        $exe = $db->query($sql); 
+        if ($exe) {
+            $res = $exe->fetchAll(PDO::FETCH_OBJ);
+            http_response_code(201);
+        } else {
+            $res = ["error" => "Failed to fetch type."];
+            http_response_code(500);
+        }
+    }
+    
+    return $res;
+}
+
 function get_niveau($db, $id) {
     if(isset($id) && $id != '') {
         $sql = "SELECT * FROM niveau_sportif WHERE niveau_sportif.id_niveau=:id"; 
@@ -164,6 +194,11 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
             case 'niveau':
                 $result = get_niveau($pdo, $inputArray[1] ?? '');
+                echo json_encode($result);
+                exit;
+
+            case 'type-aliment':
+                $result = get_type_aliment($pdo, $inputArray[1] ?? '');
                 echo json_encode($result);
                 exit;
 
