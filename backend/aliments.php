@@ -38,7 +38,7 @@ function get_aliments($db, $id) {
 
         $exe = $db->query($sql); 
         if ($exe) {
-            $res = $exe->fetch(PDO::FETCH_OBJ);
+            $res = $exe->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         } else {
             $res = ["error" => "Failed to fetch aliments."];

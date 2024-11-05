@@ -151,7 +151,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
                 exit;
             default:
                 http_response_code(405);
-                exit(json_encode(["error" => "Method Not Allowed"]));
+                exit(json_encode(["error" => "Unknown Request"]));
         }
         exit;
         
