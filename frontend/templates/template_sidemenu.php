@@ -23,6 +23,6 @@
             echo ('<a' . $CurrentPageString . ' href="' . $page . '">' . $titre . '</a>');
         }
         echo ('<a href="deconnection.php" class="deconnexion">Déconnexion</a>');
-        echo "</div><script>function openSM(x) {x.style.width = \"250px\";x.querySelector('.openSideMenu').style.visibility = 'hidden';x.querySelector('.closeSideMenu').style.visibility = 'visible';}function closeSM(x) {x.style.width = \"25px\";x.querySelector('.closeSideMenu').style.visibility = 'hidden';x.querySelector('.openSideMenu').style.visibility = 'visible';}</script>";
+        echo "</div><script>function openSM(x) {x.style.width = \"250px\";document.getElementById(\"main\").style.marginLeft= \"25px\";x.querySelector('.openSideMenu').style.visibility = 'hidden';x.querySelector('.closeSideMenu').style.visibility = 'visible';}function closeSM(x) {x.style.width = \"25px\";document.getElementById(\"main\").style.marginLeft= \"250px\";x.querySelector('.closeSideMenu').style.visibility = 'hidden';x.querySelector('.openSideMenu').style.visibility = 'visible';}</script>";
     }
 ?>

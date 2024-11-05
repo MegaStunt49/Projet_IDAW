@@ -13,7 +13,7 @@
     require_once('templates/template_sidemenu.php');
     renderSideMenuToHTML($currentPageId);
 ?>
-<div class="main">
+<div id="main">
     <div class="titre">
         <h1>Profil</h1>
     </div>
