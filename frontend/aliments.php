@@ -15,7 +15,6 @@
     renderSideMenuToHTML($currentPageId);
 ?>
 <div id="main">
-    <p id="log-paragraph"></p>
     <table id="table" class="display">
         <thead>
             <tr>
@@ -25,26 +24,31 @@
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        <tbody id="studentsTableBody">
+        <tbody id="alimentsTableBody">
         </tbody>
     </table>
-    <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
+    <form id="addAlimentForm" action="" onsubmit="onFormSubmit();">
         <div class="form-group row">
-            <label for="inputLogin" class="col-sm-2 col-form-label">Login*</label>
+            <label for="libelle" class="col-sm-2 col-form-label">Nom de l'aliment*</label>
             <div class="col-sm-3">
-                <input type="text" class="form-control" id="inputLogin" required>
+                <input type="text" class="form-control" id="libelle" required>
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputMail" class="col-sm-2 col-form-label">Email</label>
+            <label for="type" class="col-sm-2 col-form-label">Type d'aliment*</label>
             <div class="col-sm-3">
-                <input type="text" class="form-control" id="inputMail">
+                <select id="typeSelect" name="type" required>
+                </select>
             </div>
         </div>
         <div class="form-group row">
             <span class="col-sm-2"></span>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary form-control">Create</button>
+                <button type="submit" class="btn btn-primary form-control">
+                    <span class="transition bg-blue"></span>
+                    <span class="gradient"></span>
+                    <span class="label">Create</span>
+                </button>
             </div>
         </div>
     </form>
@@ -52,8 +56,25 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script>
         $(document).ready( function () {
-
             const prefix = $('#config').data('api-prefix');
+
+            //Rempli le menu déroulant des type d'aliments
+            $.ajax({
+                url: `${prefix}/backend/references.php/type-aliment`,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    const niveauSelect = $('#typeSelect');
+                    if (Array.isArray(data)) {
+                        data.forEach(item => {
+                            $('<option>', {
+                                value: item.ID_TYPE_ALIMENT,
+                                text: item.LIBELLE
+                            }).appendTo(niveauSelect);
+                        });
+                    }
+                }
+            });
 
             $('#table').DataTable({
                 ajax: {
@@ -84,23 +105,43 @@
             });
         });
 
+        function showLogMessage(message) {
+            $('#log-paragraph').html(message).fadeIn();
+            setTimeout(() => {
+                $('#log-paragraph').fadeOut();
+            }, 3000); // Hides the message after 3 seconds
+        }
+
         function onFormSubmit() {
             event.preventDefault();
-            let login = $("#inputLogin").val();
-            let mail = $("#inputMail").val();
+            const prefix = $('#config').data('api-prefix');
+
+            let libelle = $("#libelle").val();
+            let type_id = $("#typeSelect").val();
+            let type_libelle = $("#typeSelect option:selected").text();
+            
             $.ajax({
-                url: `${prefix}/backend/aliments.php/${login}/${mail}`,
+                url: `${prefix}/backend/aliments.php`,
                 method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    libelle: libelle,
+                    id_type: type_id
+                }),
                 success: function(response) {
                     const parsedData = JSON.parse(response);
                     $('#table').DataTable().row.add({
-                        id: parsedData.id,
-                        login: login,
-                        email: mail
+                        id_aliment: parsedData.id,
+                        libelle: libelle,
+                        type_aliment: type_libelle
                     }).draw();
+                    showLogMessage('Aliment créé avec succès');
+                    
+                    $("#libelle").val('');
+                    $("#typeSelect").val('');
                 },
                 error: function(xhr, status, error) {
-                    $('#log-paragraph').html('Erreur: Impossible de créer l\'aliment');
+                    showLogMessage('Erreur: Impossible de créer l\'aliment');
                 }
             });
         }
@@ -108,18 +149,18 @@
         function delete_entry(button) {
             let table = $('#table').DataTable();
             let row = $(button).closest('tr');
-
             let rowId = table.row(row).data().id;
+
             table.row(row).remove().draw();
 
             $.ajax({
                 url: `${prefix}/backend/aliments.php/${rowId}`,
                 method: 'DELETE',
                 success: function(response) {
-                    $('#log-paragraph').html('Aliment supprimer avec succès');
+                    showLogMessage('Aliment supprimé avec succès');
                 },
                 error: function(xhr, status, error) {
-                    $('#log-paragraph').html('Erreur: Impossible de supprimer l\'aliment');
+                    showLogMessage('Erreur: Impossible de supprimer l\'aliment');
                 }
             });
         }
@@ -152,14 +193,18 @@
                 url: `http://localhost/TP4/exo5/users.php/${rowId}/${login}/${email}`,
                 method: 'PUT',
                 success: function(response) {
-                    $('#log-paragraph').html('User updated successfully');
+                    showLogMessage('Aliment mis à jour avec succès');
                 },
                 error: function(xhr, status, error) {
-                    $('#log-paragraph').html('Error: Could not update user');
+                    showLogMessage('Erreur: Impossible de mettre à jour l\'aliment');
                 }
             });
         }
     </script>
+
+    <div id="log-container">
+        <p id="log-paragraph"></p>
+    </div>
 </div>
 
 <?php
