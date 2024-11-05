@@ -22,6 +22,11 @@ if(isset($_SERVER['PATH_INFO'])) {
     ];
 }
 
+function getJsonInput() {
+    $json = file_get_contents('php://input');
+    return json_decode($json, true);
+}
+
 function get_users($db, $login) {
     if(isset($login) && $login != '') {
         $sql = "SELECT utilisateur.login, niveau_sportif.libelle, sexe.libelle, utilisateur.annee_naissance, utilisateur.pseudo, utilisateur.email 
@@ -56,29 +61,29 @@ function get_users($db, $login) {
     return $res;
 }
 
-function new_user($db, $login, $id_niveau, $id_sexe, $password, $annee_naissance, $pseudo, $email) {
+function new_user($db, $data) {
     $sql = "INSERT INTO utilisateur (login, id_niveau, id_sexe, password, annee_naissance, pseudo, email) 
-    VALUES (:login, :id_niveau, :id_sexe, :password, :annee_naissance, :pseudo, :email)";
+            VALUES (:login, :id_niveau, :id_sexe, :password, :annee_naissance, :pseudo, :email)";
     $exe = $db->prepare($sql);
 
-    $exe->bindParam(':login', $login);
-    $exe->bindParam(':id_niveau', $id_niveau);
-    $exe->bindParam(':id_sexe', $id_sexe);
-    $exe->bindParam(':password', $password);
-    $exe->bindParam(':annee_naissance', $annee_naissance);
-    $exe->bindParam(':pseudo', $pseudo);
-    $exe->bindParam(':email', $email);
+    $exe->bindParam(':login', $data['login']);
+    $exe->bindParam(':id_niveau', $data['id_niveau']);
+    $exe->bindParam(':id_sexe', $data['id_sexe']);
+    $exe->bindParam(':password', $data['password']);
+    $exe->bindParam(':annee_naissance', $data['annee_naissance']);
+    $exe->bindParam(':pseudo', $data['pseudo']);
+    $exe->bindParam(':email', $data['email']);
 
     if ($exe->execute()) {
-        $newUserId = $db->lastInsertId();
         $res = [
-            'login' => $login,
-            'id_niveau' => $id_niveau,
-            'id_sexe' => $id_sexe,
-            'password' => $password,
-            'annee_naissance' => $annee_naissance,
-            'pseudo' => $pseudo,
-            'email' => $email];
+            'login' => $data['login'],
+            'id_niveau' => $data['id_niveau'],
+            'id_sexe' => $data['id_sexe'],
+            'password' => $data['password'],
+            'annee_naissance' => $data['annee_naissance'],
+            'pseudo' => $data['pseudo'],
+            'email' => $data['email']
+        ];
         http_response_code(201);
     } else {
         $res = ["error" => "Failed to create user."];
@@ -87,27 +92,27 @@ function new_user($db, $login, $id_niveau, $id_sexe, $password, $annee_naissance
     return $res;
 }
 
-function update_user($db, $login, $id_niveau, $password, $pseudo, $email) {
+function update_user($db, $data) {
     $sql = "UPDATE utilisateur SET id_niveau = :id_niveau, password = :password, pseudo = :pseudo, email = :email
-    WHERE login = :login";
+            WHERE login = :login";
     $exe = $db->prepare($sql);
 
-    $exe->bindParam(':login', $login);
-    $exe->bindParam(':id_niveau', $id_niveau);
-    $exe->bindParam(':password', $password);
-    $exe->bindParam(':pseudo', $pseudo);
-    $exe->bindParam(':email', $email);
+    $exe->bindParam(':login', $data['login']);
+    $exe->bindParam(':id_niveau', $data['id_niveau']);
+    $exe->bindParam(':password', $data['password']);
+    $exe->bindParam(':pseudo', $data['pseudo']);
+    $exe->bindParam(':email', $data['email']);
 
     if ($exe->execute()) {
         $rowCount = $exe->rowCount();
-
         if ($rowCount > 0) {
             $res = [
-                'login' => $login,
-                'id_niveau' => $id_niveau,
-                'password' => $password,
-                'pseudo' => $pseudo,
-                'email' => $email];
+                'login' => $data['login'],
+                'id_niveau' => $data['id_niveau'],
+                'password' => $data['password'],
+                'pseudo' => $data['pseudo'],
+                'email' => $data['email']
+            ];
             http_response_code(200);
         } else {
             $res = ['error' => "User not found or no changes made."];
@@ -117,7 +122,6 @@ function update_user($db, $login, $id_niveau, $password, $pseudo, $email) {
         $res = ["error" => "Failed to update user."];
         http_response_code(500);
     }
-
     return $res;
 }
 
@@ -153,14 +157,26 @@ switch($_SERVER["REQUEST_METHOD"]) {
         exit;
         
     case 'POST':
-        $result = new_user($pdo, $inputArray[0], $inputArray[1], $inputArray[2], $inputArray[3], $inputArray[4], $inputArray[5], $inputArray[6]);
-        echo json_encode($result);
-        exit;
+        $data = getJsonInput();
+        if ($data) {
+            $result = new_user($pdo, $data);
+            echo json_encode($result);
+        } else {
+            http_response_code(400);
+            echo json_encode(["error" => "Invalid data provided."]);
+        }
+        break;
         
     case 'PUT':
-        $result = update_user($pdo, $inputArray[0], $inputArray[1], $inputArray[2], $inputArray[3], $inputArray[4]);
-        echo json_encode($result);
-        exit;
+        $data = getJsonInput();
+        if ($data) {
+            $result = update_user($pdo, $data);
+            echo json_encode($result);
+        } else {
+            http_response_code(400);
+            echo json_encode(["error" => "Invalid data provided."]);
+        }
+        break;
     
     case 'DELETE':
         $result = delete_user($pdo, $inputArray[0]);
