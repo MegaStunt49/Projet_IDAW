@@ -111,7 +111,7 @@ function delete_entry(button) {
 function update_entry(button) {
     let table = $('#table').DataTable();
     let row = $(button).closest('tr');
-    let rowId = table.row(row).data().id;
+    let rowId = table.row(row).data().id_aliment;
     let rowLibelle = table.row(row).data().libelle;
     window.location.href = "nutriment.php?aliment=" + rowLibelle + "&id=" + rowId ;
 }

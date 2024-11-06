@@ -9,15 +9,16 @@
     require_once('templates/template_header.php');
     require_once("config.php");
 
-    $currentPageId = "aliments";
+    $currentPageId = "";
 
     require_once('templates/template_sidemenu.php');
     renderSideMenuToHTML($currentPageId);
 ?>
 <div id="main">
-    <h1><?php echo $_GET['aliment']; ?></h1>
+    <h1 id="page-title"><?php echo $_GET['aliment']; ?></h1>
     <div class="horizontal-container">
         <div id="add-sub-aliment">
+            <h2>Ajouter un sous-aliment</h2>
             <table id="table" class="display">
                 <thead>
                     <tr>
@@ -32,17 +33,20 @@
             </table>
         </div>
         <div id="update-nutrient">
-            <p><span id="carac-name"></span>:</p>
+            <h2>Modifier les apports nutritionnels</h2>
             <div>
                 <select id="caracSelect" name="carac" required>
                 </select>
-                <p><span id="unite"></span></p>
+                <p><input type="text" id="quantite-input"> <span id="unite"></span></p>
             </div>
-            <button type="button" class="btn btn-primary" onclick="delete_entry(this)">
+            <button type="button" class="btn btn-primary" onclick="update_nutrient(this)">
                 <span class="transition bg-blue"></span>
                 <span class="gradient"></span>
                 <span class="label">Update</span>
             </button>
+            <div id="log-container">
+                <p id="log-paragraph"></p>
+            </div>
         </div>
     </div>
 
