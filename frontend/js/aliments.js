@@ -90,9 +90,10 @@ function onFormSubmit() {
 }
 
 function delete_entry(button) {
+    const prefix = $('#config').data('api-prefix');
     let table = $('#table').DataTable();
     let row = $(button).closest('tr');
-    let rowId = table.row(row).data().id;
+    let rowId = table.row(row).data().id_aliment;
 
     table.row(row).remove().draw();
 

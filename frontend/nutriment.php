@@ -17,8 +17,8 @@
 <div id="main">
     <h1 id="page-title"><?php echo $_GET['aliment']; ?></h1>
     <div class="horizontal-container">
-        <div id="add-sub-aliment">
-            <h2>Ajouter un sous-aliment</h2>
+        <div id="add-sub-aliment" class="section" style="flex:1">
+            <h2 class="section-title">Ajouter un sous-aliment</h2>
             <table id="table" class="display">
                 <thead>
                     <tr>
@@ -32,20 +32,30 @@
                 </tbody>
             </table>
         </div>
-        <div id="update-nutrient">
-            <h2>Modifier les apports nutritionnels</h2>
-            <div>
-                <select id="caracSelect" name="carac" required>
-                </select>
-                <p><input type="text" id="quantite-input"> <span id="unite"></span></p>
+        <div id="update-nutrient" class="vertical-container" style="flex:1">
+            <div class="section" style="flex: 1">
+                <h2 class="section-title">Modifier les apports nutritionnels</h2>
+                <div>
+                    <select id="caracSelect" name="carac" required>
+                    </select>
+                    <p><input type="text" id="quantite-input"> <span id="unite"></span></p>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="update_nutrient(this)">
+                    <span class="transition bg-blue"></span>
+                    <span class="gradient"></span>
+                    <span class="label">Update</span>
+                </button>
+                <div class="log-container">
+                    <p class="log-paragraph" id="log-paragraph-1"></p>
+                </div>
             </div>
-            <button type="button" class="btn btn-primary" onclick="update_nutrient(this)">
-                <span class="transition bg-blue"></span>
-                <span class="gradient"></span>
-                <span class="label">Update</span>
-            </button>
-            <div id="log-container">
-                <p id="log-paragraph"></p>
+            <div class="section"  style="flex: 2">
+                <h2 class="section-title">Sous-aliments</h2>
+                <div id="aliments-holder">
+                </div>
+                <div class="log-container">
+                    <p class="log-paragraph" id="log-paragraph-2"></p>
+                </div>
             </div>
         </div>
     </div>

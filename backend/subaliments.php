@@ -135,7 +135,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
         
     case 'POST':
         $postData = json_decode(file_get_contents("php://input"), true);
-        if (isset($postData['libelle']) && isset($postData['id_type'])) {
+        if (isset($inputArray[0], $inputArray[1], $postData['proportion'])) {
             $result = new_subaliment($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '', $postData['proportion']);
             echo json_encode($result);
         } else {
@@ -146,8 +146,8 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
     case 'PUT':
         $putData = json_decode(file_get_contents("php://input"), true);
-        if (isset($inputArray[0], $putData['id_type'], $putData['libelle'])) {
-            $result = update_subaliment($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '', $postData['proportion']);
+        if (isset($inputArray[0], $inputArray[1], $putData['proportion'])) {
+            $result = update_subaliment($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '', $putData['proportion']);
             echo json_encode($result);
         } else {
             http_response_code(400);
