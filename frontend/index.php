@@ -12,3 +12,5 @@
 
     require_once('templates/template_sidemenu.php');
     renderSideMenuToHTML($currentPageId);
+?>
+<div id="main"></div>

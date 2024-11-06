@@ -2,7 +2,7 @@
     require_once('templates/template_header.php');
     require_once('config.php');
 ?>
-<form id="login_form" action="" method="POST">
+<form id="login_form" action="" onsubmit="onFormSubmit();">
     <table>
         <tr>
             <th>Login :</th>
@@ -18,6 +18,9 @@
         </tr>
     </table>
 </form>
+<div id="log-container">
+    <p id="log-paragraph"></p>
+</div>
 <script>
     function onFormSubmit() {
         event.preventDefault();
@@ -29,9 +32,9 @@
         $.ajax({
             url: `${prefix}/backend/auth.php/${login}/${password}`,
             method: 'POST',
+            dataType: 'json',
             success: function(response) {
-                let decoded_response = json_decode(response);
-                if (decoded_response && decoded_response->connected) {
+                if (response && response.connected) {
                     showLogMessage('Connection réalisée avec succès');
                     location.href = `${prefix}/frontend/index.php`;
                 } else {
@@ -40,8 +43,14 @@
             },
             error: function(xhr, status, error) {
                 showLogMessage('Erreur: Login non trouvé');
-            }
+            },
         });
+    }
+    function showLogMessage(message) {
+        $('#log-paragraph').html(message).fadeIn();
+        setTimeout(() => {
+            $('#log-paragraph').fadeOut();
+        }, 3000); // Hides the message after 3 seconds
     }
 </script>
 <?php
