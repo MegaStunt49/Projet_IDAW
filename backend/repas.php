@@ -47,7 +47,7 @@ function get_repas_by_id($db, $id) {
 }
 
 function get_repas_by_login($db, $login) {
-    $sql = "SELECT * FROM repas WHERE repas.login=:login"; 
+    $sql = "SELECT a.libelle, r.date_heure, c.quantite FROM repas AS r JOIN contient AS c ON r.id_repas=c.id_repas JOIN aliment AS a ON a.id_aliment=c.id_aliment WHERE repas.login=:login"; 
     $exe = $db->prepare($sql);
 
     $exe->bindParam(':login', $login);
