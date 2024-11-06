@@ -13,6 +13,7 @@
 
     require_once('templates/template_sidemenu.php');
     renderSideMenuToHTML($currentPageId);
+    $login = $_SESSION['login'];
 ?>
 <div id="main">
     <div class="titre">
@@ -88,7 +89,9 @@
 
                 $('#table').DataTable({
                     ajax: {
-                        url: `${prefix}/backend/repas.php/login/`,
+                        <?php
+                            echo "url: `\${prefix}/backend/repas.php/login/".$login."`,";
+                        ?>
                         dataSrc: ''
                     },
                     columns: [
