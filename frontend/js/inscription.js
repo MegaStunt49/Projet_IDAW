@@ -66,13 +66,29 @@ function onFormSubmit() {
             pseudo: pseudo,
             password: password,
             id_niveau: niveauID,
-            ID_SEXE: sexeID,
+            id_sexe: sexeID,
             annee_naissance: annee_naissance,
             email: email,
         }),
         success: function(response) {
             showLogMessage('Utilisateur créé avec succès');
-            //location.href = `${prefix}/frontend/index.php`;
+            
+            $.ajax({
+                url: `${prefix}/backend/auth.php/${login}/${password}`,
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response && response.connected) {
+                        showLogMessage('Connection réalisée avec succès');
+                        location.href = `${prefix}/frontend/index.php`;
+                    } else {
+                        showLogMessage("Mot de passe ou Login incorrect");
+                    };
+                },
+                error: function(xhr, status, error) {
+                    showLogMessage('Erreur: Login non trouvé');
+                },
+            });
         },
         error: function(xhr, status, error) {
             showLogMessage('Erreur: Impossible de créer l\'utilisateur');
