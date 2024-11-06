@@ -1,7 +1,7 @@
 <?php
 require_once("templates/template_header.php");
 ?>
-<form id="register_form" action="inscrit.php" method="POST">
+<form id="register_form" action="" onsubmit="onFormSubmit();">
     <table>
         <tr>
             <th>Login :</th>
