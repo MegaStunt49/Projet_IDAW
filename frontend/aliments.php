@@ -7,7 +7,6 @@
 
 
     require_once('templates/template_header.php');
-    require_once("config.php");
 
     $currentPageId = "aliments";
 
@@ -62,6 +61,5 @@
 </div>
 
 <?php
-echo '<div id="config" data-api-prefix="'. _PREFIX . '"></div>';
-require_once("templates/template_footer.php");
+    require_once("templates/template_footer.php");
 ?>

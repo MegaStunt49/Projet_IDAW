@@ -61,6 +61,5 @@
         echo ('<p style="color:green;">'.$_GET['log'].'</p>');
     }
     
-    echo '<div id="config" data-api-prefix="'. _PREFIX . '"></div>';
     require_once("templates/template_footer.php");
 ?>

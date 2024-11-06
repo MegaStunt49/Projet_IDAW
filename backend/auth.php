@@ -41,6 +41,12 @@ function is_connected() {
     return isset($_SESSION['login']);
 }
 
+function disconnection() {
+    session_start();
+    session_unset();
+    session_destroy();
+}
+
 function is_admin($db) {
     session_start();
     if (isset($_SESSION['login'])) {
@@ -94,6 +100,10 @@ switch($_SERVER["REQUEST_METHOD"]) {
         }
         exit;
         
+    case 'DELETE':
+        disconnection();
+        exit;
+            
     default:
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
         http_response_code(405);
