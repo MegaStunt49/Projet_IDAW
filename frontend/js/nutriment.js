@@ -1,5 +1,7 @@
 $(document).ready( function () {
     const prefix = $('#config').data('api-prefix');
+    const id_aliment = (new URLSearchParams(window.location.search)).get('id');
+    console.log(id_aliment);
 
     //Rempli le menu déroulant des caracteristiques
     $.ajax({
@@ -11,8 +13,8 @@ $(document).ready( function () {
             if (Array.isArray(data)) {
                 data.forEach(item => {
                     $('<option>', {
-                        value: item.ID_CARACTERISTIQUE,
-                        text: item.LIBELLE
+                        value: item.id_caracteristique,
+                        text: item.libelle
                     }).appendTo(caracSelect);
                 });
             }
@@ -45,8 +47,28 @@ $(document).ready( function () {
     $('#caracSelect').change(function() {
         const selectedText = $("#caracSelect option:selected").text();
         const selectedValue = $("#caracSelect").val();
-        
-        $("#unite").text(`${selectedText}`);
+
+        $.ajax({
+            url: `${prefix}/backend/references.php/caracteristique/${selectedValue}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $("#unite").text(`${data.nom_unite}`);
+            }
+        });
+
+        $.ajax({
+            url: `${prefix}/backend/nutriments.php/${id_aliment}/${selectedValue}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                if (data.quantite) {
+                    $("#quantite-input").val(`${data.quantite}`);
+                } else {
+                    $("#quantite-input").val('');
+                }
+            }
+        });
     });
 });
 
@@ -63,4 +85,23 @@ function add_aliment(button) {
     let rowId = table.row(row).data().id;
 
     table.row(row).remove().draw();
+}
+
+function update_nutrient(button) {
+    const prefix = $('#config').data('api-prefix');
+    const id_aliment = (new URLSearchParams(window.location.search)).get('id');
+    const selectedValue = $("#caracSelect").val();
+
+    $.ajax({
+        url: `${prefix}/backend/nutriments.php/${id_aliment}/${selectedValue}`,
+        method: 'PUT',
+        dataType: 'json',
+        data: JSON.stringify({ "quantite": $("#quantite-input").val() }),
+        success: function(data) {
+            showLogMessage("Apport modifié avec succès")
+        },
+        error: function(xhr, status, error) {
+            showLogMessage("Aucun changement effectué");
+        }
+    });
 }
