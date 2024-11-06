@@ -35,10 +35,11 @@ function get_subaliments($db, $id, $id_enfant) {
         }
     } else {
         $sql = "SELECT id_aliment, id_aliment_enfant, proportion FROM est_compose_de
-        WHERE id_aliment=:id"; 
+        WHERE id_aliment=:id";
+        $exe = $db->prepare($sql);
 
-        $exe = $db->query($sql); 
-        if ($exe) {
+        $exe->bindParam(':id', $id);
+        if ($exe->execute()) {
             $res = $exe->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         } else {
@@ -127,7 +128,7 @@ function delete_subaliment($db, $id, $id_enfant) {
 
 switch($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
-        $result = get_aliments($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '');
+        $result = get_subaliments($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '');
         setHeaders();
         echo json_encode($result);
         exit;
@@ -135,7 +136,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
     case 'POST':
         $postData = json_decode(file_get_contents("php://input"), true);
         if (isset($postData['libelle']) && isset($postData['id_type'])) {
-            $result = new_aliment($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '', $postData['proportion']);
+            $result = new_subaliment($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '', $postData['proportion']);
             echo json_encode($result);
         } else {
             http_response_code(400);
@@ -146,7 +147,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
     case 'PUT':
         $putData = json_decode(file_get_contents("php://input"), true);
         if (isset($inputArray[0], $putData['id_type'], $putData['libelle'])) {
-            $result = update_aliment($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '', $postData['proportion']);
+            $result = update_subaliment($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '', $postData['proportion']);
             echo json_encode($result);
         } else {
             http_response_code(400);
@@ -155,7 +156,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
         exit;
     
     case 'DELETE':
-        $result = delete_aliment($pdo, $inputArray[0], $inputArray[1]);
+        $result = delete_subaliment($pdo, $inputArray[0], $inputArray[1]);
         echo json_encode($result);
         exit;
         
