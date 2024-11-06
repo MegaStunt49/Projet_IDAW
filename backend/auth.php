@@ -19,7 +19,7 @@ if(isset($_SERVER['PATH_INFO'])) {
 }
 
 function connect_user($db, $login, $pwd) {
-    $sql = "SELECT utilisateur.password FROM utilisateur WHERE utilisateur.login = :login"; 
+    $sql = "SELECT utilisateur.password, utilisateur.est_admin FROM utilisateur WHERE utilisateur.login = :login"; 
     $exe = $db->prepare($sql);
 
     $exe->bindParam(':login', $login);
@@ -30,6 +30,7 @@ function connect_user($db, $login, $pwd) {
         if ($res && password_verify($pwd, $res->password)) { 
             session_start();
             $_SESSION["login"] = $login;
+            $_SESSION["est_admin"] = $res->est_admin;
             return true;
         }
     }
@@ -47,21 +48,10 @@ function disconnection() {
     session_destroy();
 }
 
-function is_admin($db) {
+function is_admin() {
     session_start();
-    if (isset($_SESSION['login'])) {
-        $login = $_SESSION['login'];
-        $sql = "SELECT utilisateur.est_admin FROM utilisateur WHERE utilisateur.login = :login"; 
-        $exe = $db->prepare($sql);
-
-        $exe->bindParam(':login', $login);
-        
-        if ($exe->execute()) {
-            $res = $exe->fetch(PDO::FETCH_OBJ);
-            
-            return $res->est_admin;
-        }
-        return false;
+    if (isset($_SESSION['est_admin'])) {
+        return boolval($_SESSION["est_admin"]);
     }
 }
 
