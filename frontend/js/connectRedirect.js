@@ -23,7 +23,15 @@ function isConnected(prefix){
 
 function Disonnect(prefix){
     $.ajax({
-        url: `${prefix}/backend/auth.php`,
-        method: 'DELETE',
+        url: `${prefix}/backend/auth.php/delete`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response) {
+                location.href = "connection.php";
+            } else {
+                return true;
+            };
+        },
     });
 }

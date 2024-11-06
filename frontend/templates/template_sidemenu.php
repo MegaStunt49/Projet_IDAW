@@ -40,7 +40,6 @@
                 }
                 function Deconect() {
                     Disonnect(\""._PREFIX."\");
-                    location.href = \"connection.php\";
                 }
                 </script>";
         echo "<script src=\"js/connectRedirect.js\"></script>";
