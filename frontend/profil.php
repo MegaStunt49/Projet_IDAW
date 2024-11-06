@@ -19,32 +19,37 @@
     </div>
     <div class="contenu Profil">
         <div class="login">
-            <h2>Login</h2>
+            <h2 id="login">Login</h2>
         </div>
         <div class="pseudo">
-            <h3>Pseudo</h3>
+            <h3 id="pseudo">Pseudo</h3>
         </div>
         <div class="email">
-            <p>email@email.com</p>
+            <p id="email">email@email.com</p>
         </div>
         <div class="password">
-            <p>••••••••</p>
+            <p id="password">••••••••</p>
         </div>
         <div class="birthyear">
-            <p>Année</p>
+            <p id="birthyear">Année</p>
         </div>
         <div class="sexe">
-            <p>Sexe</p>
+            <p id="sexe">Sexe</p>
         </div>
         <div class="niveauSportif">
-            <p>Niveau Sportif</p>
+            <p id="niveauSportif">Niveau Sportif</p>
         </div>
         <div class="boutons">
             <button>Edit</button>
         </div>
     </div>
 </div>
-
+<script src="js/profil.js"></script>
 <?php
+    $login = "";
+    if(isset($_SESSION['login'])){
+        $login = '/'.$_SESSION['login'];
+    }
+    echo '<div id="config2" data-login="'. $login . '"></div>';
     require_once('templates/template_footer.php');
 ?>
