@@ -1,11 +1,11 @@
 <?php
 require_once("init_pdo.php");
 
-function setHeaders() {
-    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
-    header("Access-Control-Allow-Origin: *");
-    header('Content-type: application/json; charset=utf-8');
-}
+// function setHeaders() {
+//     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+//     header("Access-Control-Allow-Origin: *");
+//     header('Content-type: application/json; charset=utf-8');
+// }
 
 if(isset($_SERVER['PATH_INFO'])) {
     $cleanedString = trim($_SERVER['PATH_INFO'], '/');
@@ -28,34 +28,55 @@ function getJsonInput() {
 }
 
 function get_users($db, $login) {
-    if(isset($login) && $login != '') {
-        $sql = "SELECT utilisateur.login, niveau_sportif.libelle, sexe.libelle, utilisateur.annee_naissance, utilisateur.pseudo, utilisateur.email 
-        FROM utilisateur, niveau_sportif, sexe 
-        WHERE utilisateur.id_niveau = niveau_sportif.id_niveau AND utilisateur.id_sexe = sexe.id_sexe AND utilisateur.login = :login"; 
-        $exe = $db->prepare($sql);
-    
-        $exe->bindParam(':login', $login);
-        if ($exe->execute()) {
-            $res = $exe->fetch(PDO::FETCH_OBJ);
-            http_response_code(201);
+    session_start();
+    if(isset($_SESSION["est_admin"]) && $_SESSION["est_admin"] == 1) {
+        if(isset($login) && $login != '') {
+            $sql = "SELECT utilisateur.login, niveau_sportif.libelle AS sportlibelle, sexe.libelle AS sexelibelle, utilisateur.annee_naissance, utilisateur.pseudo, utilisateur.email 
+            FROM utilisateur, niveau_sportif, sexe 
+            WHERE utilisateur.id_niveau = niveau_sportif.id_niveau AND utilisateur.id_sexe = sexe.id_sexe AND utilisateur.login = :login"; 
+            $exe = $db->prepare($sql);
+        
+            $exe->bindParam(':login', $login);
+            if ($exe->execute()) {
+                $res = $exe->fetch(PDO::FETCH_OBJ);
+                http_response_code(201);
+            } else {
+                $res = ["error" => "Failed to fetch user."];
+                http_response_code(500);
+            }
         } else {
-            $res = ["error" => "Failed to fetch user."];
-            http_response_code(500);
+            $sql = "SELECT utilisateur.login, niveau_sportif.libelle AS sportlibelle, sexe.libelle AS sexelibelle, utilisateur.annee_naissance, utilisateur.pseudo, utilisateur.email 
+            FROM utilisateur, niveau_sportif, sexe 
+            WHERE utilisateur.id_niveau = niveau_sportif.id_niveau AND utilisateur.id_sexe = sexe.id_sexe";        
+            
+            $exe = $db->query($sql); 
+            if ($exe) {
+                $res = $exe->fetchAll(PDO::FETCH_OBJ);
+                http_response_code(201);
+            } else {
+                $res = ["error" => "Failed to fetch users."];
+                http_response_code(500);
+            }
         }
-        
-    } else {
-        $sql = "SELECT utilisateur.login, niveau_sportif.libelle, sexe.libelle, utilisateur.annee_naissance, utilisateur.pseudo, utilisateur.email 
+    } elseif(isset($_SESSION['login'])) {
+        $trueLogin = $_SESSION['login'];
+        $sql = "SELECT utilisateur.login, niveau_sportif.libelle AS sportlibelle, sexe.libelle AS sexelibelle, utilisateur.annee_naissance, utilisateur.pseudo, utilisateur.email 
         FROM utilisateur, niveau_sportif, sexe 
-        WHERE utilisateur.id_niveau = niveau_sportif.id_niveau AND utilisateur.id_sexe = sexe.id_sexe";        
+        WHERE utilisateur.id_niveau = niveau_sportif.id_niveau AND utilisateur.id_sexe = sexe.id_sexe AND utilisateur.login = :login";        
+        $exe = $db->prepare($sql); 
         
-        $exe = $db->query($sql); 
-        if ($exe) {
+        $exe->bindParam(':login', $trueLogin);
+        if ($exe->execute()) {
             $res = $exe->fetchAll(PDO::FETCH_OBJ);
             http_response_code(201);
         } else {
             $res = ["error" => "Failed to fetch users."];
             http_response_code(500);
         }
+    }
+    else {
+        $res = ["error" => "Failed to fetch users."];
+        http_response_code(500);
     }
     
     return $res;
@@ -158,7 +179,7 @@ function delete_user($db, $login) {
 switch($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
         $result = get_users($pdo, $inputArray[0]);
-        setHeaders();
+        // setHeaders();
         echo json_encode($result);
         exit;
         
