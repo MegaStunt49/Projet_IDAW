@@ -132,39 +132,35 @@ button:active {
 }
 
 #table td:last-child {
-  width: 200px; /* change space available for buttons */
+  width: 200px;
   white-space: nowrap;
 }
 
-/* Set the form to display all elements in a single horizontal row */
 #addAlimentForm {
   display: flex;
   align-items: center;
-  gap: 20px; /* Space between each form element */
+  gap: 20px;
   padding: 10px 20px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
   max-width: 100%;
-  overflow: auto; /* Ensures scrolling if screen size is too small */
+  overflow: auto;
 }
 
-/* Style individual form-group to be in a row */
 .form-group {
   display: flex;
   align-items: center;
-  gap: 10px; /* Space between label and input */
+  gap: 10px;
   margin: 0;
 }
 
-/* Labels: align to the right and make text bold for visibility */
 .form-group label {
   font-weight: bold;
   color: #333;
-  white-space: nowrap; /* Prevent label wrapping */
+  white-space: nowrap;
 }
 
-/* Styling the input fields to match horizontally */
 .form-group .form-control {
   padding: 8px 12px;
   font-size: 14px;
@@ -172,7 +168,6 @@ button:active {
   border-radius: 4px;
 }
 
-/* Dropdown styling */
 #typeSelect {
   padding: 8px 12px;
   font-size: 14px;
@@ -182,20 +177,20 @@ button:active {
 }
 
 #log-container {
-  display: flex; /* Use flexbox for centering */
-  justify-content: center; /* Center horizontally */
-  margin-top: 20px; /* Space above the log message */
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 #log-paragraph {
-  display: none; /* Initially hidden */
-  background-color: #484e9e; /* Light red background */
-  color: #090729; /* Dark red text color */
-  border: 1px solid #160d6b; /* Light red border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px 20px; /* Padding inside the log message */
-  font-size: 16px; /* Font size */
-  transition: opacity 0.5s ease; /* Smooth transition for fading */
-  width: 300px; /* Fixed width for the log message */
-  text-align: center; /* Center the text */
+  display: none;
+  background-color: #484e9e;
+  color: #090729;
+  border: 1px solid #160d6b;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: opacity 0.5s ease;
+  width: 300px;
+  text-align: center;
 }
