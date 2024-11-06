@@ -213,5 +213,13 @@
                 });
             }
         </script>
+        <div id="log-container">
+            <p id="log-paragraph"></p>
+        </div>
     </div>
 </div>
+
+<?php
+echo '<div id="config" data-api-prefix="'. _PREFIX . '"></div>';
+require_once("templates/template_footer.php");
+?>
