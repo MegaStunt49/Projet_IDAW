@@ -55,8 +55,8 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="js/aliments.js"></script>
 
-    <div id="log-container">
-        <p id="log-paragraph"></p>
+    <div class="log-container" id="log-container">
+        <p class="log-paragraph" id="log-paragraph"></p>
     </div>
 </div>
 

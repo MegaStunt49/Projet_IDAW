@@ -176,13 +176,13 @@ button:active {
   background-color: #fff;
 }
 
-#log-container {
+.log-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-#log-paragraph {
+.log-paragraph {
   display: none;
   background-color: #484e9e;
   color: #090729;
@@ -209,23 +209,21 @@ button:active {
   gap: 20px;
 }
 
-#add-sub-aliment {
-  flex: 3;
+.vertical-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.section {
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
 }
 
-#update-nutrient {
-  flex: 1;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
-#add-sub-aliment h2, #update-nutrient h2 {
+.section-title {
   font-size: 1.5em;
   color: #0056b3;
   margin-bottom: 10px;
