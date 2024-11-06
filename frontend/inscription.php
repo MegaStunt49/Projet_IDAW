@@ -1,24 +1,23 @@
 <?php
 require_once("templates/template_header.php");
-require_once("config.php");
 ?>
 <form id="register_form" action="inscrit.php" method="POST">
     <table>
         <tr>
             <th>Login :</th>
-            <td><input type="text" name="login" required></td>
+            <td><input type="text" name="login" id="login" required></td>
         </tr>
         <tr>
             <th>Mot de passe :</th>
-            <td><input type="password" name="password" required></td>
+            <td><input type="password" name="password" id="password" required></td>
         </tr>
         <tr>
             <th>Pseudo :</th>
-            <td><input type="text" name="pseudo" required></td>
+            <td><input type="text" name="pseudo" id="pseudo" required></td>
         </tr>
         <tr>
             <th>Adresse E-mail :</th>
-            <td><input type="email" name="mail" required></td>
+            <td><input type="email" name="mail" id="mail" required></td>
         </tr>
         <tr>
             <th>Année de naissance :</th>
@@ -44,6 +43,9 @@ require_once("config.php");
         </tr>
     </table>
 </form>
+<div id="log-container">
+    <p id="log-paragraph"></p>
+</div>
 <script src="js/inscription.js"></script>
 <?php
     echo '<div id="config" data-api-prefix="'. _PREFIX . '"></div>';

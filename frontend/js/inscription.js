@@ -37,3 +37,62 @@ $(document).ready(function() {
         }
     });
 });
+
+function showLogMessage(message) {
+    $('#log-paragraph').html(message).fadeIn();
+    setTimeout(() => {
+        $('#log-paragraph').fadeOut();
+    }, 3000); // Hides the message after 3 seconds
+}
+
+function onFormSubmit() {
+    event.preventDefault();
+    const prefix = $('#config').data('api-prefix');
+
+    let login = $("#login").val();
+    let password = $("#password").val();
+    let pseudo = $("#pseudo").val();
+    let email = $("#mail").val();
+    let annee_naissance = $("#annee_naissance").val();
+    let niveauID = $("#niveauSelect").val();
+    let sexeID = $("#sexeSelect").val();
+    
+    $.ajax({
+        url: `${prefix}/backend/users.php`,
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            login: login,
+            pseudo: pseudo,
+            password: password,
+            id_niveau: niveauID,
+            ID_SEXE: sexeID,
+            annee_naissance: annee_naissance,
+            email: email,
+        }),
+        success: function(response) {
+            const parsedData = JSON.parse(response);
+            showLogMessage('Utilisateur créé avec succès');
+            
+            $.ajax({
+                url: `${prefix}/backend/auth.php/${login}/${password}`,
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response && response.connected) {
+                        showLogMessage('Connection réalisée avec succès');
+                        location.href = `${prefix}/frontend/index.php`;
+                    } else {
+                        showLogMessage("Mot de passe ou Login incorrect");
+                    };
+                },
+                error: function(xhr, status, error) {
+                    showLogMessage('Erreur: Login non trouvé');
+                },
+            });
+        },
+        error: function(xhr, status, error) {
+            showLogMessage('Erreur: Impossible de créer l\'utilisateur');
+        }
+    });
+}

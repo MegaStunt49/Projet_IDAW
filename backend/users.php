@@ -66,10 +66,12 @@ function new_user($db, $data) {
             VALUES (:login, :id_niveau, :id_sexe, :password, :annee_naissance, :pseudo, :email)";
     $exe = $db->prepare($sql);
 
+    $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+
     $exe->bindParam(':login', $data['login']);
     $exe->bindParam(':id_niveau', $data['id_niveau']);
     $exe->bindParam(':id_sexe', $data['id_sexe']);
-    $exe->bindParam(':password', $data['password']);
+    $exe->bindParam(':password', $hashedPassword);
     $exe->bindParam(':annee_naissance', $data['annee_naissance']);
     $exe->bindParam(':pseudo', $data['pseudo']);
     $exe->bindParam(':email', $data['email']);
@@ -79,7 +81,6 @@ function new_user($db, $data) {
             'login' => $data['login'],
             'id_niveau' => $data['id_niveau'],
             'id_sexe' => $data['id_sexe'],
-            'password' => $data['password'],
             'annee_naissance' => $data['annee_naissance'],
             'pseudo' => $data['pseudo'],
             'email' => $data['email']
@@ -93,15 +94,19 @@ function new_user($db, $data) {
 }
 
 function update_user($db, $data) {
-    $sql = "UPDATE utilisateur SET id_niveau = :id_niveau, password = :password, pseudo = :pseudo, email = :email
+    $sql = "UPDATE utilisateur SET id_niveau = :id_niveau, password = :password, pseudo = :pseudo, email = :email, annee_naissance = :annee_naissance, id_sexe = :id_sexe
             WHERE login = :login";
     $exe = $db->prepare($sql);
 
+    $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+
     $exe->bindParam(':login', $data['login']);
     $exe->bindParam(':id_niveau', $data['id_niveau']);
-    $exe->bindParam(':password', $data['password']);
+    $exe->bindParam(':password', $hashedPassword);
     $exe->bindParam(':pseudo', $data['pseudo']);
     $exe->bindParam(':email', $data['email']);
+    $exe->bindParam(':annee_naissance', $data['annee_naissance']);
+    $exe->bindParam(':id_sexe', $data['id_sexe']);
 
     if ($exe->execute()) {
         $rowCount = $exe->rowCount();
@@ -109,7 +114,8 @@ function update_user($db, $data) {
             $res = [
                 'login' => $data['login'],
                 'id_niveau' => $data['id_niveau'],
-                'password' => $data['password'],
+                'id_sexe' => $data['id_sexe'],
+                'annee_naissance' => $data['annee_naissance'],
                 'pseudo' => $data['pseudo'],
                 'email' => $data['email']
             ];

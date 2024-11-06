@@ -18,6 +18,7 @@
         </tr>
     </table>
 </form>
+<a href="inscription.php">Inscription</a>
 <div id="log-container">
     <p id="log-paragraph"></p>
 </div>
