@@ -23,7 +23,6 @@
         ];
 
         $url = _PREFIX . "/backend/users.php";
-        $apiKey = _APIKEY;
         
         $curl = curl_init($url);
         
