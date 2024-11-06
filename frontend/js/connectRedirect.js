@@ -23,8 +23,8 @@ function isConnected(prefix){
 
 function Disonnect(prefix){
     $.ajax({
-        url: `${prefix}/backend/auth.php/delete`,
-        method: 'GET',
+        url: `${prefix}/backend/auth.php`,
+        method: 'DELETE',
         dataType: 'json',
         success: function(response) {
             if (response) {

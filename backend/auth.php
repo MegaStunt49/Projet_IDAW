@@ -80,11 +80,6 @@ switch($_SERVER["REQUEST_METHOD"]) {
                 echo json_encode(["is_admin" => $result]);
                 exit;
 
-            case 'delete':
-                disconnection();
-                echo json_encode(["connected" => false]);
-                exit;
-
             default:
                 http_response_code(404);
                 echo json_encode(["error" => "Unknown Request"]);
