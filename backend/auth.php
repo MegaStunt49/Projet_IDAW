@@ -66,7 +66,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
                 exit;
 
             case 'is-admin':
-                $result = is_admin($pdo);
+                $result = is_admin();
                 echo json_encode(["is_admin" => $result]);
                 exit;
 
