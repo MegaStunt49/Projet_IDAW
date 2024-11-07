@@ -48,7 +48,8 @@
                 </table>
             </div>
             <div id="added-aliment" class="section" style="flex:1">
-                <h2 class="section-title">Aliment Ajoutés</h2>
+                <h2 class="section-title">Repas</h2>
+                <h3 class="subsection-title">Aliment Ajoutés</h3>
                 <table id="table2" class="display">
                     <thead>
                         <tr>
@@ -60,26 +61,25 @@
                     <tbody id="addedAlimentsTableBody">
                     </tbody>
                 </table>
+                <form id="addRepasForm" action="" onsubmit="onFormSubmit();">
+                    <div class="form-group row">
+                        <label for="date_heure" class="col-sm-2 col-form-label">Date et heure*</label>
+                        <div class="col-sm-3">
+                            <input type="datetime-local" id="date_heure" name="date_heure" value="2024-11-01T12:30">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <span class="col-sm-2"></span>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary form-control">
+                                <span class="transition bg-blue"></span>
+                                <span class="gradient"></span>
+                                <span class="label">Create</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <form id="addRepasForm" action="" onsubmit="onFormSubmit();">
-                <h2>Repas</h2>
-                <div class="form-group row">
-                    <label for="date_heure" class="col-sm-2 col-form-label">Date et heure*</label>
-                    <div class="col-sm-3">
-                        <input type="datetime-local" id="date_heure" name="date_heure" value="2024-11-01T12:30">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <span class="col-sm-2"></span>
-                    <div class="col-sm-2">
-                        <button type="submit" class="btn btn-primary form-control">
-                            <span class="transition bg-blue"></span>
-                            <span class="gradient"></span>
-                            <span class="label">Create</span>
-                        </button>
-                    </div>
-                </div>
-            </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>

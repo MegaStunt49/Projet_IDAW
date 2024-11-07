@@ -52,7 +52,7 @@ function get_repas_by_id($db, $id) {
 }
 
 function get_repas_by_login($db, $login) {
-    $sql = "SELECT a.libelle, r.date_heure, c.quantite, cc.quantite AS energie, a.id_aliment
+    $sql = "SELECT a.libelle, r.date_heure, c.quantite, c.quantite*cc.quantite/100 AS energie, a.id_aliment
             FROM contient AS c 
             JOIN repas AS r ON r.id_repas=c.id_repas 
             JOIN aliment AS a ON a.id_aliment=c.id_aliment 
@@ -73,6 +73,7 @@ function get_repas_by_login($db, $login) {
 }
 
 function new_repas($db, $data) {
+    session_start();
     if (isset($_SESSION['login'])) {
         $sql = "INSERT INTO repas (login, date_heure) VALUES (:login, :date_heure)"; 
         $exe = $db->prepare($sql);
@@ -98,8 +99,8 @@ function new_repas($db, $data) {
                     'id' => $new_repas_id,
                     'login' => $_SESSION['login'],
                     'date_heure' => $data['dateheure'],
-                    'id_aliment' => $data['id_alim'],
-                    'quantite' => $data['quantite']];
+                    'id_aliment' => $data['id_alim'][0],
+                    'quantite' => $data['quantite'][0]];
                 http_response_code(200);
             } else {
                 $res = ["error" => "Failed to create contient."];

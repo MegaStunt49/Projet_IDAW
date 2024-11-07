@@ -74,19 +74,20 @@ function onFormSubmit() {
     event.preventDefault();
     const prefix = $('#config').data('api-prefix');
 
-    let alim_id = $("#alimSelect").val();
-    let alim_libelle = $("#alimSelect option:selected").text();
+    let alim_id = $("#table2").DataTable().column(0).data().toArray();
+    let alim_libelle = $("#table2").DataTable().column(1).data().toArray();
+    let quantite = $("#table2").DataTable().column(2).data().toArray();
     let date_heure = $("#date_heure").val();
-    let quantite = $("#quantite").val();
-    
+    date_heure = date_heure.replace("T", " ");
+    showLogMessage(alim_id[0]);
     $.ajax({
         url: `${prefix}/backend/repas.php`,
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
-            id_alim: [alim_id],
+            id_alim: alim_id,
             dateheure: date_heure,
-            quantite: [quantite]
+            quantite: quantite
         }),
         success: function(response) {
             const parsedData = JSON.parse(response);
@@ -95,11 +96,9 @@ function onFormSubmit() {
             //     libelle: libelle,
             //     type_aliment: type_libelle
             // }).draw();
-            // showLogMessage('Aliment créé avec succès');
+            showLogMessage('Repas créé avec succès');
             
-            $("#date_heure").val('');
-            $("#alimSelect").val('');
-            $("#quantite").val('');
+            $("#date_heure").val('2024-11-01T12:30');
         },
         error: function(xhr, status, error) {
             showLogMessage('Erreur: Impossible de créer le repas');
