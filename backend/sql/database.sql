@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 04 nov. 2024 à 14:10
+-- Généré le : jeu. 07 nov. 2024 à 16:33
 -- Version du serveur : 8.3.0
 -- Version de PHP : 8.2.18
 
@@ -46,6 +46,37 @@ INSERT INTO `aliment` (`ID_ALIMENT`, `ID_TYPE_ALIMENT`, `LIBELLE`) VALUES
 (3, 1, 'Aubergine'),
 (4, 3, 'Ratatouille'),
 (5, 1, 'Potimarron');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `bnm`
+--
+
+DROP TABLE IF EXISTS `bnm`;
+CREATE TABLE IF NOT EXISTS `bnm` (
+  `ID_GROUP` int NOT NULL,
+  `ID_CARACTERISTIQUE` int NOT NULL,
+  `QUANTITE` float(10,3) NOT NULL,
+  PRIMARY KEY (`ID_GROUP`,`ID_CARACTERISTIQUE`),
+  KEY `POUR_CARACTERISTIQUE` (`ID_CARACTERISTIQUE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `bnm`
+--
+
+INSERT INTO `bnm` (`ID_GROUP`, `ID_CARACTERISTIQUE`, `QUANTITE`) VALUES
+(1, 6, 600.000),
+(1, 27, 0.350),
+(2, 6, 1100.000),
+(3, 6, 1300.000),
+(4, 6, 1450.000),
+(5, 6, 1600.000),
+(6, 6, 2400.000),
+(7, 6, 1800.000),
+(8, 6, 2400.000),
+(9, 6, 2000.000);
 
 -- --------------------------------------------------------
 
@@ -173,6 +204,38 @@ INSERT INTO `est_compose_de` (`ID_ALIMENT`, `ID_ALIMENT_ENFANT`, `PROPORTION`) V
 (4, 1, 33.000),
 (4, 2, 33.000),
 (4, 3, 33.000);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `groupe_pop`
+--
+
+DROP TABLE IF EXISTS `groupe_pop`;
+CREATE TABLE IF NOT EXISTS `groupe_pop` (
+  `ID_GROUP` int NOT NULL AUTO_INCREMENT,
+  `AGE_MIN` int NOT NULL,
+  `AGE_MAX` int NOT NULL,
+  `ID_SEXE` int DEFAULT NULL,
+  `LIBELLE` varchar(64) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`ID_GROUP`),
+  KEY `GENRE` (`ID_SEXE`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `groupe_pop`
+--
+
+INSERT INTO `groupe_pop` (`ID_GROUP`, `AGE_MIN`, `AGE_MAX`, `ID_SEXE`, `LIBELLE`) VALUES
+(1, 0, 0, NULL, 'Nourrissons'),
+(2, 1, 3, NULL, 'Enfants de 1 à 3 ans'),
+(3, 4, 6, NULL, 'Enfants de 4 à 6 ans'),
+(4, 7, 10, NULL, 'Enfants de 7 à 10 ans'),
+(5, 11, 14, NULL, 'Adolescents de 11 à 14 ans'),
+(6, 15, 17, 1, 'Adolescents de 15 à 17 ans'),
+(7, 15, 17, 2, 'Adolescentes de 15 à 17 ans'),
+(8, 18, 150, 1, 'Hommes de 18 ans et plus'),
+(9, 18, 150, 2, 'Femmes de 18 ans et plus');
 
 -- --------------------------------------------------------
 
@@ -323,9 +386,10 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 INSERT INTO `utilisateur` (`LOGIN`, `ID_NIVEAU`, `ID_SEXE`, `PASSWORD`, `ANNEE_NAISSANCE`, `PSEUDO`, `EMAIL`, `EST_ADMIN`) VALUES
 ('DupontMartin123', 1, 1, 'commun', 1983, 'Dupont', 'martin.dupont@gmail.com', 0),
 ('jeanMichel42', 2, 1, 'pwd', 1967, 'JeanMich', 'JeanMich@el.com', 0),
-('suzanneMichel69', 1, 2, 'passwordCompliqué', 1995, 'suzanneMichel', 'suzanneMich@el.com', 0),
-('teddyRider', 3, 1, 'Judo4TheWin', 1989, 'Teddy', 'teddy@ursa.fr', 0),
-('TonyParCoeur', 3, 1, 'LesDécimalesDePi!', 1982, 'TroisQuatorze', 'Pierre.Pipi@pipi.pi', 0);
+('riri', 3, 1, '$2y$10$ic8R.tp04B2fouyRet08SeI/tn8Vk47NPeEMHelRWs7Lx9SHIJRmq', 2000, 'DestructeurDan', 'destr@ct.ion', 0),
+('suzanneMichel69', 1, 2, '$2y$10$ic8R.tp04B2fouyRet08SeI/tn8Vk47NPeEMHelRWs7Lx9SHIJRmq', 1995, 'suzanneMichel', 'suzanneMich@el.com', 0),
+('teddyRider', 3, 1, '$2y$10$ic8R.tp04B2fouyRet08SeI/tn8Vk47NPeEMHelRWs7Lx9SHIJRmq', 1989, 'Teddy', 'teddy@ursa.fr', 0),
+('TonyParCoeur', 3, 1, '$2y$10$ic8R.tp04B2fouyRet08SeI/tn8Vk47NPeEMHelRWs7Lx9SHIJRmq', 1982, 'TroisQuatorze', 'Pierre.Pipi@pipi.pi', 0);
 
 --
 -- Contraintes pour les tables déchargées
@@ -336,6 +400,13 @@ INSERT INTO `utilisateur` (`LOGIN`, `ID_NIVEAU`, `ID_SEXE`, `PASSWORD`, `ANNEE_N
 --
 ALTER TABLE `aliment`
   ADD CONSTRAINT `FK_A_POUR_TYPE` FOREIGN KEY (`ID_TYPE_ALIMENT`) REFERENCES `type_d_aliment` (`ID_TYPE_ALIMENT`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `bnm`
+--
+ALTER TABLE `bnm`
+  ADD CONSTRAINT `POUR_CARACTERISTIQUE` FOREIGN KEY (`ID_CARACTERISTIQUE`) REFERENCES `caracteristique` (`ID_CARACTERISTIQUE`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `POUR_GROUP` FOREIGN KEY (`ID_GROUP`) REFERENCES `groupe_pop` (`ID_GROUP`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `caracteristique`
@@ -363,6 +434,12 @@ ALTER TABLE `contient_pour_100g`
 ALTER TABLE `est_compose_de`
   ADD CONSTRAINT `FK_EST_COMPOSE_DE` FOREIGN KEY (`ID_ALIMENT`) REFERENCES `aliment` (`ID_ALIMENT`) ON DELETE RESTRICT ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_EST_COMPOSE_DE2` FOREIGN KEY (`ID_ALIMENT_ENFANT`) REFERENCES `aliment` (`ID_ALIMENT`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `groupe_pop`
+--
+ALTER TABLE `groupe_pop`
+  ADD CONSTRAINT `GENRE` FOREIGN KEY (`ID_SEXE`) REFERENCES `sexe` (`ID_SEXE`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `repas`
