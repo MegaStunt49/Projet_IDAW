@@ -14,6 +14,7 @@
     renderSideMenuToHTML($currentPageId);
 ?>
 <div id="main">
+    <h1>Gestion des aliments</h1>
     <table id="table" class="display">
         <thead>
             <tr>

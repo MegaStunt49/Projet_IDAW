@@ -1,6 +1,7 @@
 $(document).ready( function () {
     const prefix = $('#config').data('api-prefix');
     const pie_chart_data = [];
+    let request=0;
 
     //Rempli les types d'ailments
     $.ajax({
@@ -15,14 +16,23 @@ $(document).ready( function () {
                         method: 'GET',
                         dataType: 'json',
                         success: function(aliment_data) {
-                            pie_chart_data.push({ name: aliment_data.type_aliment, value: repas.quantite });
-                            console.log(pie_chart_data);
+                            const existing_data = pie_chart_data.find(d => d.name === aliment_data.type_aliment);
+
+                            if (existing_data) {
+                                existing_data.value += parseFloat(repas.quantite);
+                            } else {
+                                pie_chart_data.push({ name: aliment_data.type_aliment, value: parseFloat(repas.quantite) });
+                            }
+
+                            request++;
+
+                            if (request === repas_data.length) {
+                                $('#aliment-type-chart').append(createPieChart(pie_chart_data));
+                            }
                         },
                     });
                 });
             }
-
-            $(`#aliment-type-chart`).append(createPieChart(pie_chart_data));
         },
     });
 
@@ -86,11 +96,13 @@ function createPieChart(data) {
         .call(text => text.append("tspan")
             .attr("y", "-0.4em")
             .attr("font-weight", "bold")
+            .attr("font-size", "150%")
             .text(d => d.data.name))
         .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
             .attr("x", 0)
             .attr("y", "0.7em")
             .attr("fill-opacity", 0.7)
+            .attr("font-size", "150%")
             .text(d => d.data.value.toLocaleString("en-US") + ' g'));
   
     return svg.node();
