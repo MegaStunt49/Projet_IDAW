@@ -82,7 +82,7 @@ function onFormSubmit() {
             
             $("#date_heure").val('2024-11-01T12:30');
             $("#table2").DataTable().clear().draw();
-            $("#table").DataTable().clear().draw();
+            $("#table").DataTable().destroy();
             $('#table').DataTable({
                 ajax: {
                     url: `${prefix}/backend/repas.php/self`,
