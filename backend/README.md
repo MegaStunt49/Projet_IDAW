@@ -200,7 +200,8 @@ GET /prefix/aliments.php/1 HTTP/1.1
 {
     "id_aliment": 1,
     "libelle": "tomato",
-    "type_aliment": "Fruit"
+    "type_aliment": "Fruit",
+    "id_type_aliment": 2
 }
 ```
 
