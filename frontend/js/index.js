@@ -1,6 +1,6 @@
 $(document).ready( function () {
     const prefix = $('#config').data('api-prefix');
-    const pie_char_data = [];
+    const pie_chart_data = [];
 
     //Rempli les types d'ailments
     $.ajax({
@@ -16,12 +16,13 @@ $(document).ready( function () {
                         dataType: 'json',
                         success: function(aliment_data) {
                             pie_chart_data.push({ name: aliment_data.type_aliment, value: repas.quantite });
+                            console.log(pie_chart_data);
                         },
                     });
                 });
             }
 
-            $(`#aliment-type-chart`).append(createPieChart(pie_char_data));
+            $(`#aliment-type-chart`).append(createPieChart(pie_chart_data));
         },
     });
 
