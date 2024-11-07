@@ -7,6 +7,11 @@ function setHeaders() {
     header('Content-type: application/json; charset=utf-8');
 }
 
+function getJsonInput() {
+    $json = file_get_contents('php://input');
+    return json_decode($json, true);
+}
+
 $inputArray = [
     0 => '',
     1 => '',
@@ -67,22 +72,41 @@ function get_repas_by_login($db, $login) {
     return $res;
 }
 
-function new_repas($db, $login, $date_heure) {
-    $sql = "INSERT INTO repas (login, date_heure) VALUES (:login, :date_heure)"; 
-    $exe = $db->prepare($sql);
+function new_repas($db, $data) {
+    if (isset($_SESSION['login'])) {
+        $sql = "INSERT INTO repas (login, date_heure) VALUES (:login, :date_heure)"; 
+        $exe = $db->prepare($sql);
 
-    $exe->bindParam(':login', $login);
-    $exe->bindParam(':date_heure', $date_heure);
+        $exe->bindParam(':login', $_SESSION['login']);
+        $exe->bindParam(':date_heure', $data['dateheure']);
 
-    if ($exe->execute()) {
-        $new_repas_id = $db->lastInsertId();
-        $res = [
-            'id' => $new_repas_id,
-            'login' => $login,
-            'date_heure' => $date_heure];
-        http_response_code(200);
+        if ($exe->execute()) {
+            $new_repas_id = $db->lastInsertId();
+            $sql2 = "INSERT INTO contient (id_repas, id_aliment, quantite) VALUES (:id_repas, :id_aliment, :quantite)";
+            $exe2 = $db->prepare($sql2);
+
+            $exe2->bindParam(':id_repas', $new_repas_id );
+            $exe2->bindParam(':id_aliment', $data['id_alim']);
+            $exe2->bindParam(':quantite', $data['quantite']);
+
+            if ($exe2->execute()) {
+                $res = [
+                    'id' => $new_repas_id,
+                    'login' => $_SESSION['login'],
+                    'date_heure' => $data['dateheure'],
+                    'id_aliment' => $data['id_alim'],
+                    'quantite' => $data['quantite']];
+                http_response_code(200);
+            } else {
+                $res = ["error" => "Failed to create contient."];
+                http_response_code(500);
+            }
+        } else {
+            $res = ["error" => "Failed to create repas."];
+            http_response_code(500);
+        }
     } else {
-        $res = ["error" => "Failed to create repas."];
+        $res = ["error" => "Not logged in yet"];
         http_response_code(500);
     }
     return $res;
@@ -172,8 +196,14 @@ switch($_SERVER["REQUEST_METHOD"]) {
         exit;
         
     case 'POST':
-        $result = new_repas($pdo, $inputArray[0] ?? '', $inputArray[1] ?? '');
-        echo json_encode($result);
+        $data = getJsonInput();
+        if ($data) {
+            $result = new_repas($pdo, $data);
+            echo json_encode($result);
+        } else {
+            http_response_code(400);
+            echo json_encode(["error" => "Invalid data provided."]);
+        }
         exit;
         
     case 'PUT':

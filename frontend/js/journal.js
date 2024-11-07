@@ -54,8 +54,9 @@ function onFormSubmit() {
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
-            libelle: libelle,
-            id_type: type_id
+            id_alim: alim_id,
+            dateheure: date_heure,
+            quantite: quantite
         }),
         success: function(response) {
             const parsedData = JSON.parse(response);
