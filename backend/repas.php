@@ -47,7 +47,12 @@ function get_repas_by_id($db, $id) {
 }
 
 function get_repas_by_login($db, $login) {
-    $sql = "SELECT a.libelle, r.date_heure, c.quantite FROM repas AS r JOIN contient AS c ON r.id_repas=c.id_repas JOIN aliment AS a ON a.id_aliment=c.id_aliment WHERE repas.login=:login"; 
+    $sql = "SELECT a.libelle, r.date_heure, c.quantite, cc.quantite AS energie
+            FROM contient AS c 
+            JOIN repas AS r ON r.id_repas=c.id_repas 
+            JOIN aliment AS a ON a.id_aliment=c.id_aliment 
+            JOIN contient_pour_100g AS cc ON cc.id_aliment=c.id_aliment AND cc.id_caracteristique=6
+            WHERE r.login=:login"; 
     $exe = $db->prepare($sql);
 
     $exe->bindParam(':login', $login);
@@ -148,6 +153,17 @@ switch($_SERVER["REQUEST_METHOD"]) {
                 $result = get_repas_by_login($pdo, $inputArray[1] ?? '');
                 setHeaders();
                 echo json_encode($result);
+                exit;
+            case 'self':
+                session_start();
+                if (isset($_SESSION['login'])){
+                    $result = get_repas_by_login($pdo, $_SESSION['login'] ?? '');
+                    setHeaders();
+                    echo json_encode($result);
+                }
+                else {
+                    echo json_encode(["error" => "Not logged in"]);
+                }
                 exit;
             default:
                 http_response_code(405);
