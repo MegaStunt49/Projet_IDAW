@@ -52,11 +52,11 @@ function get_repas_by_id($db, $id) {
 }
 
 function get_repas_by_login($db, $login) {
-    $sql = "SELECT a.libelle, r.date_heure, c.quantite, cc.quantite AS energie
+    $sql = "SELECT a.libelle, r.date_heure, c.quantite, cc.quantite AS energie, a.id_aliment
             FROM contient AS c 
             JOIN repas AS r ON r.id_repas=c.id_repas 
             JOIN aliment AS a ON a.id_aliment=c.id_aliment 
-            JOIN contient_pour_100g AS cc ON cc.id_aliment=c.id_aliment AND cc.id_caracteristique=6
+            LEFT JOIN contient_pour_100g AS cc ON cc.id_aliment=c.id_aliment AND cc.id_caracteristique=6
             WHERE r.login=:login"; 
     $exe = $db->prepare($sql);
 
@@ -82,14 +82,18 @@ function new_repas($db, $data) {
 
         if ($exe->execute()) {
             $new_repas_id = $db->lastInsertId();
-            $sql2 = "INSERT INTO contient (id_repas, id_aliment, quantite) VALUES (:id_repas, :id_aliment, :quantite)";
-            $exe2 = $db->prepare($sql2);
+            $success = true;
+            for ($i = 0; $i < count($data['id_alim']); $i++) {
+                $sql2 = "INSERT INTO contient (id_repas, id_aliment, quantite) VALUES (:id_repas, :id_aliment, :quantite)";
+                $exe2 = $db->prepare($sql2);
 
-            $exe2->bindParam(':id_repas', $new_repas_id );
-            $exe2->bindParam(':id_aliment', $data['id_alim']);
-            $exe2->bindParam(':quantite', $data['quantite']);
+                $exe2->bindParam(':id_repas', $new_repas_id );
+                $exe2->bindParam(':id_aliment', $data['id_alim'][$i]);
+                $exe2->bindParam(':quantite', $data['quantite'][$i]);
+                $success = $success & $exe2->execute();
+            }
 
-            if ($exe2->execute()) {
+            if ($success) {
                 $res = [
                     'id' => $new_repas_id,
                     'login' => $_SESSION['login'],

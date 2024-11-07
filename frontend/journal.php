@@ -31,37 +31,56 @@
             <tbody id="repasTableBody">
             </tbody>
         </table>
-        <form id="addRepasForm" action="" onsubmit="onFormSubmit();">
-            <div class="form-group row">
-                <label for="libelle" class="col-sm-2 col-form-label">Nom de l'aliment*</label>
-                <div class="col-sm-3">
-                    <select id="alimSelect" name="libelle" required>
-                    </select>
-                </div>
+        <div class="horizontal-container">
+            <div id="add-aliment" class="section" style="flex:1">
+                <h2 class="section-title">Ajouter un Aliment</h2>
+                <table id="table1" class="display">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alimentsTableBody">
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group row">
-                <label for="date_heure" class="col-sm-2 col-form-label">Date et heure*</label>
-                <div class="col-sm-3">
-                    <input type="datetime-local" id="date_heure" name="date_heure" value="2024-11-01T12:30">
-                </div>
+            <div id="added-aliment" class="section" style="flex:1">
+                <h2 class="section-title">Aliment Ajoutés</h2>
+                <table id="table2" class="display">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Quantité</th>
+                        </tr>
+                    </thead>
+                    <tbody id="addedAlimentsTableBody">
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group row">
-                <label for="quantite" class="col-sm-2 col-form-label">Quantité*</label>
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" id="quantite" required>
+            <form id="addRepasForm" action="" onsubmit="onFormSubmit();">
+                <h2>Repas</h2>
+                <div class="form-group row">
+                    <label for="date_heure" class="col-sm-2 col-form-label">Date et heure*</label>
+                    <div class="col-sm-3">
+                        <input type="datetime-local" id="date_heure" name="date_heure" value="2024-11-01T12:30">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <span class="col-sm-2"></span>
-                <div class="col-sm-2">
-                    <button type="submit" class="btn btn-primary form-control">
-                        <span class="transition bg-blue"></span>
-                        <span class="gradient"></span>
-                        <span class="label">Create</span>
-                    </button>
+                <div class="form-group row">
+                    <span class="col-sm-2"></span>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary form-control">
+                            <span class="transition bg-blue"></span>
+                            <span class="gradient"></span>
+                            <span class="label">Create</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
         <script src="js/journal.js"></script>
