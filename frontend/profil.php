@@ -40,22 +40,19 @@
             <p id="niveauSportif">Niveau Sportif</p>
         </div>
         <div class="boutons">
-            <button>Edit</button>
+            <button type="button" class="btn" onclick="Edit(this)">Edit</button>
         </div>
     </div>
     <form style="display: none;" id="modifyUserForm" action="" onsubmit="onFormSubmit();">
+        <h1 type="text" name="loginF" id="loginF" required></h1>
         <table>
             <tr>
-                <th>Login :</th>
-                <h2 type="text" name="login" id="login" required></h2>
-            </tr>
-            <tr>
                 <th>Mot de passe :</th>
-                <td><input type="password" name="password" id="password" required></td>
+                <td><input type="password" name="passwordF" id="passwordF" required></td>
             </tr>
             <tr>
                 <th>Pseudo :</th>
-                <td><input type="text" name="pseudo" id="pseudo" required></td>
+                <td><input type="text" name="pseudoF" id="pseudoF" required></td>
             </tr>
             <tr>
                 <th>Adresse E-mail :</th>
@@ -81,7 +78,7 @@
             </tr>
             <tr>
                 <th></th>
-                <td><input type="submit" value="Se connecter..." /></td>
+                <td><input type="submit" value="Mettre à jour" /></td>
             </tr>
         </table>
     </form>

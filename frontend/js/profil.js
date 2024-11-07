@@ -2,7 +2,43 @@ $(document).ready( function () {
     const prefix = $('#config').data('api-prefix');
     let trueLogin = $('#config2').data('login');
 
-    //Rempli le menu déroulant des type d'aliments
+    //Rempli le menu déroulant des niveaux
+    $.ajax({
+        url: `${prefix}/backend/references.php/niveau`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const niveauSelect = $('#niveauSelect');
+            if (Array.isArray(data)) {
+                data.forEach(item => {
+                    $('<option>', {
+                        value: item.ID_NIVEAU,
+                        text: item.LIBELLE
+                    }).appendTo(niveauSelect);
+                });
+            }
+        }
+    });
+
+    //Rempli le menu déroulant des sexes
+    $.ajax({
+        url: `${prefix}/backend/references.php/sexe`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const niveauSelect = $('#sexeSelect');
+            if (Array.isArray(data)) {
+                data.forEach(item => {
+                    $('<option>', {
+                        value: item.ID_SEXE,
+                        text: item.LIBELLE
+                    }).appendTo(sexeSelect);
+                });
+            }
+        }
+    });
+
+    //Rempli informations profil
     $.ajax({
         url: `${prefix}/backend/users.php${trueLogin}`,
         method: 'GET',
@@ -14,6 +50,16 @@ $(document).ready( function () {
             document.getElementById("birthyear").textContent = data[0].annee_naissance;
             document.getElementById("sexe").textContent = data[0].sexelibelle;
             document.getElementById("niveauSportif").textContent = data[0].sportlibelle;
+            document.getElementById("loginF").textContent = data[0].login;
+            document.getElementById("pseudoF").value = data[0].pseudo;
+            document.getElementById("mail").value = data[0].email;
+            document.getElementById("annee_naissance").value = data[0].annee_naissance;
+            $("#niveauSelect").find("option").filter(function(index) {
+                return data[0].sportlibelle === $(this).text();
+            }).attr("selected", "selected");
+            $("#sexeSelect").find("option").filter(function(index) {
+                return data[0].sexelibelle === $(this).text();
+            }).attr("selected", "selected");
         }
     });
 });
@@ -34,14 +80,19 @@ function onFormSubmit() {
     event.preventDefault();
     const prefix = $('#config').data('api-prefix');
 
-    let login = $("#login").val();
-    let password = $("#password").val();
-    let pseudo = $("#pseudo").val();
+    let login = $("#loginF").val();
+    let password = $("#passwordF").val();
+    let pseudo = $("#pseudoF").val();
     let email = $("#mail").val();
     let annee_naissance = $("#annee_naissance").val();
     let niveauID = $("#niveauSelect").val();
     let sexeID = $("#sexeSelect").val();
     
+    if (password == ""){
+        showLogMessage('Veuillez renseigner votre mot de passe');
+        return null;
+    }
+
     $.ajax({
         url: `${prefix}/backend/users.php`,
         method: 'PUT',
