@@ -17,7 +17,7 @@
     <div class="titre">
         <h1>Profil</h1>
     </div>
-    <div class="contenu Profil">
+    <div id="removable" class="contenu Profil">
         <div class="login">
             <h2 id="login">Login</h2>
         </div>
@@ -43,6 +43,51 @@
             <button>Edit</button>
         </div>
     </div>
+    <form style="display: none;" id="modifyUserForm" action="" onsubmit="onFormSubmit();">
+        <table>
+            <tr>
+                <th>Login :</th>
+                <h2 type="text" name="login" id="login" required></h2>
+            </tr>
+            <tr>
+                <th>Mot de passe :</th>
+                <td><input type="password" name="password" id="password" required></td>
+            </tr>
+            <tr>
+                <th>Pseudo :</th>
+                <td><input type="text" name="pseudo" id="pseudo" required></td>
+            </tr>
+            <tr>
+                <th>Adresse E-mail :</th>
+                <td><input type="email" name="mail" id="mail" required></td>
+            </tr>
+            <tr>
+                <th>Année de naissance :</th>
+                <td><input type="number" id="annee_naissance" name="annee_naissance" min="1900" max="2100" required></td>
+            </tr>
+            <tr>
+                <th>Niveau Sportif :</th>
+                <td>
+                    <select id="niveauSelect" name="niveau" required>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Sexe :</th>
+                <td>
+                    <select id="sexeSelect" name="sexe" required>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td><input type="submit" value="Se connecter..." /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="log-container" id="log-container">
+    <p class="log-paragraph" id="log-paragraph"></p>
 </div>
 <script src="js/profil.js"></script>
 <?php

@@ -115,38 +115,44 @@ function new_user($db, $data) {
 }
 
 function update_user($db, $data) {
-    $sql = "UPDATE utilisateur SET id_niveau = :id_niveau, password = :password, pseudo = :pseudo, email = :email, annee_naissance = :annee_naissance, id_sexe = :id_sexe
-            WHERE login = :login";
-    $exe = $db->prepare($sql);
+    session_start();
+    if (isset($_SESSION['login']) && $_SESSION['login'] == $data['login'] || (isset($_SESSION['est_admin']) && boolval($_SESSION["est_admin"]))) {
+        $sql = "UPDATE utilisateur SET id_niveau = :id_niveau, password = :password, pseudo = :pseudo, email = :email, annee_naissance = :annee_naissance, id_sexe = :id_sexe
+                WHERE login = :login";
+        $exe = $db->prepare($sql);
 
-    $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 
-    $exe->bindParam(':login', $data['login']);
-    $exe->bindParam(':id_niveau', $data['id_niveau']);
-    $exe->bindParam(':password', $hashedPassword);
-    $exe->bindParam(':pseudo', $data['pseudo']);
-    $exe->bindParam(':email', $data['email']);
-    $exe->bindParam(':annee_naissance', $data['annee_naissance']);
-    $exe->bindParam(':id_sexe', $data['id_sexe']);
+        $exe->bindParam(':login', $data['login']);
+        $exe->bindParam(':id_niveau', $data['id_niveau']);
+        $exe->bindParam(':password', $hashedPassword);
+        $exe->bindParam(':pseudo', $data['pseudo']);
+        $exe->bindParam(':email', $data['email']);
+        $exe->bindParam(':annee_naissance', $data['annee_naissance']);
+        $exe->bindParam(':id_sexe', $data['id_sexe']);
 
-    if ($exe->execute()) {
-        $rowCount = $exe->rowCount();
-        if ($rowCount > 0) {
-            $res = [
-                'login' => $data['login'],
-                'id_niveau' => $data['id_niveau'],
-                'id_sexe' => $data['id_sexe'],
-                'annee_naissance' => $data['annee_naissance'],
-                'pseudo' => $data['pseudo'],
-                'email' => $data['email']
-            ];
-            http_response_code(200);
+        if ($exe->execute()) {
+            $rowCount = $exe->rowCount();
+            if ($rowCount > 0) {
+                $res = [
+                    'login' => $data['login'],
+                    'id_niveau' => $data['id_niveau'],
+                    'id_sexe' => $data['id_sexe'],
+                    'annee_naissance' => $data['annee_naissance'],
+                    'pseudo' => $data['pseudo'],
+                    'email' => $data['email']
+                ];
+                http_response_code(200);
+            } else {
+                $res = ['error' => "User not found or no changes made."];
+                http_response_code(404);
+            }
         } else {
-            $res = ['error' => "User not found or no changes made."];
-            http_response_code(404);
+            $res = ["error" => "Failed to update user."];
+            http_response_code(500);
         }
     } else {
-        $res = ["error" => "Failed to update user."];
+        $res = ["error" => "No rights to update user."];
         http_response_code(500);
     }
     return $res;

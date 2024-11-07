@@ -53,6 +53,7 @@ function is_admin() {
     if (isset($_SESSION['est_admin'])) {
         return boolval($_SESSION["est_admin"]);
     }
+    return false;
 }
 
 setHeaders();

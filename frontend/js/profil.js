@@ -17,3 +17,50 @@ $(document).ready( function () {
         }
     });
 });
+
+function Edit(button){
+    $("#removable").hide();
+    $("#modifyUserForm").show();
+}
+
+function showLogMessage(message) {
+    $('#log-paragraph').html(message).fadeIn();
+    setTimeout(() => {
+        $('#log-paragraph').fadeOut();
+    }, 3000); // Hides the message after 3 seconds
+}
+
+function onFormSubmit() {
+    event.preventDefault();
+    const prefix = $('#config').data('api-prefix');
+
+    let login = $("#login").val();
+    let password = $("#password").val();
+    let pseudo = $("#pseudo").val();
+    let email = $("#mail").val();
+    let annee_naissance = $("#annee_naissance").val();
+    let niveauID = $("#niveauSelect").val();
+    let sexeID = $("#sexeSelect").val();
+    
+    $.ajax({
+        url: `${prefix}/backend/users.php`,
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            login: login,
+            pseudo: pseudo,
+            password: password,
+            id_niveau: niveauID,
+            id_sexe: sexeID,
+            annee_naissance: annee_naissance,
+            email: email,
+        }),
+        success: function(response) {
+            showLogMessage('Utilisateur mis à jour avec succès');
+            
+        },
+        error: function(xhr, status, error) {
+            showLogMessage('Erreur: Impossible de mettre à jour l\'utilisateur');
+        }
+    });
+}
