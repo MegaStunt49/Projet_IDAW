@@ -123,8 +123,8 @@
 }
 
 button:hover .transition {
-    width: 8em;
-    height: 8em;
+  width: calc(100% + 3em);
+  height: calc(100% + 3em); 
 }
 
 button:active {
