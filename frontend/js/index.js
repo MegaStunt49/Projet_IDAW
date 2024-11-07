@@ -28,20 +28,15 @@ $(document).ready( function () {
         dataType: 'json',
         success: function(repas_data) {
             if (Array.isArray(repas_data)) {
-                // Get the current date
                 const currentDate = new Date();
     
-                // Calculate the cutoff date (x days ago)
                 const cutoffDate = new Date(currentDate.setDate(currentDate.getDate() - period));
     
-                // Filter repas_data to include only those within the last 'period' days
                 const filteredRepasData = repas_data.filter(repas => {
-                    // Parse the timestamp from the JSON response (assuming it's in the format 'yyyy-mm-dd hh:mm:ss')
-                    const repasDate = new Date(repas.date_heure); // JavaScript can parse this format directly
-                    return repasDate >= cutoffDate; // Keep only repas from the last 'period' days
+                    const repasDate = new Date(repas.date_heure);
+                    return repasDate >= cutoffDate;
                 });
-    
-                // Proceed with the filtered data
+
                 let request = 0;
                 filteredRepasData.forEach(repas => {
                     $.ajax({
@@ -59,7 +54,6 @@ $(document).ready( function () {
     
                             request++;
     
-                            // Check if all requests have completed before creating the chart
                             if (request === filteredRepasData.length) {
                                 $('#aliment-type-chart').append(createPieChart(pie_chart_data));
                             }

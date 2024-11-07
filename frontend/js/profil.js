@@ -1,6 +1,5 @@
 $(document).ready( function () {
     const prefix = $('#config').data('api-prefix');
-    let trueLogin = $('#config2').data('login');
 
     //Rempli le menu déroulant des niveaux
     $.ajax({
@@ -40,26 +39,33 @@ $(document).ready( function () {
 
     //Rempli informations profil
     $.ajax({
-        url: `${prefix}/backend/users.php${trueLogin}`,
+        url: `${prefix}/backend/auth.php/self`,
         method: 'GET',
         dataType: 'json',
-        success: function(data) {
-            document.getElementById("login").textContent = data[0].login;
-            document.getElementById("pseudo").textContent = data[0].pseudo;
-            document.getElementById("email").textContent = data[0].email;
-            document.getElementById("birthyear").textContent = data[0].annee_naissance;
-            document.getElementById("sexe").textContent = data[0].sexelibelle;
-            document.getElementById("niveauSportif").textContent = data[0].sportlibelle;
-            document.getElementById("loginF").textContent = data[0].login;
-            document.getElementById("pseudoF").value = data[0].pseudo;
-            document.getElementById("mail").value = data[0].email;
-            document.getElementById("annee_naissance").value = data[0].annee_naissance;
-            $("#niveauSelect").find("option").filter(function(index) {
-                return data[0].sportlibelle === $(this).text();
-            }).attr("selected", "selected");
-            $("#sexeSelect").find("option").filter(function(index) {
-                return data[0].sexelibelle === $(this).text();
-            }).attr("selected", "selected");
+        success: function(login_data) {
+            $.ajax({
+                url: `${prefix}/backend/users.php/${login_data.login}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    document.getElementById("login").textContent = data[0].login;
+                    document.getElementById("pseudo").textContent = data[0].pseudo;
+                    document.getElementById("email").textContent = data[0].email;
+                    document.getElementById("birthyear").textContent = data[0].annee_naissance;
+                    document.getElementById("sexe").textContent = data[0].sexelibelle;
+                    document.getElementById("niveauSportif").textContent = data[0].sportlibelle;
+                    document.getElementById("loginF").textContent = data[0].login;
+                    document.getElementById("pseudoF").value = data[0].pseudo;
+                    document.getElementById("mail").value = data[0].email;
+                    document.getElementById("annee_naissance").value = data[0].annee_naissance;
+                    $("#niveauSelect").find("option").filter(function(index) {
+                        return data[0].sportlibelle === $(this).text();
+                    }).attr("selected", "selected");
+                    $("#sexeSelect").find("option").filter(function(index) {
+                        return data[0].sexelibelle === $(this).text();
+                    }).attr("selected", "selected");
+                }
+            });
         }
     });
 });
