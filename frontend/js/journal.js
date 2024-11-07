@@ -1,24 +1,6 @@
 $(document).ready( function () {
     const prefix = $('#config').data('api-prefix');
 
-    //Rempli le menu déroulant des type d'aliments
-    $.ajax({
-        url: `${prefix}/backend/aliments.php`,
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            const niveauSelect = $('#alimSelect');
-            if (Array.isArray(data)) {
-                data.forEach(item => {
-                    $('<option>', {
-                        value: item.ID_ALIMENT,
-                        text: item.LIBELLE
-                    }).appendTo(niveauSelect);
-                });
-            }
-        }
-    });
-
     $('#table').DataTable({
         ajax: {
             url: `${prefix}/backend/repas.php/self`,
@@ -99,6 +81,20 @@ function onFormSubmit() {
             showLogMessage('Repas créé avec succès');
             
             $("#date_heure").val('2024-11-01T12:30');
+            $("#table2").DataTable().clear().draw();
+            $("#table").DataTable().clear().draw();
+            $('#table').DataTable({
+                ajax: {
+                    url: `${prefix}/backend/repas.php/self`,
+                    dataSrc: ''
+                },
+                columns: [
+                    { data: 'libelle', title: 'Aliment' },
+                    { data: 'date_heure', title: 'Date & Heure' },
+                    { data: 'quantite', title: 'Quantité(g)' },
+                    { data: 'energie', title: 'Apports caloriques(kcal)' }
+                ]
+            });
         },
         error: function(xhr, status, error) {
             showLogMessage('Erreur: Impossible de créer le repas');
