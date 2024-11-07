@@ -27,7 +27,7 @@ $(document).ready( function () {
         columns: [
             { data: 'libelle', title: 'Aliment' },
             { data: 'date_heure', title: 'Date & Heure' },
-            { data: 'quantite', title: 'Quantité' },
+            { data: 'quantite', title: 'Quantité(g)' },
             { data: 'energie', title: 'Apports caloriques(kcal)' }
         ]
     });

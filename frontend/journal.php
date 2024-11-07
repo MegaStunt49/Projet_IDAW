@@ -24,7 +24,7 @@
                 <tr>
                     <th scope="col">Aliment</th>
                     <th scope="col">Date & Heure</th>
-                    <th scope="col">Quantité</th>
+                    <th scope="col">Quantité(g)</th>
                     <th scope="col">Apports caloriques(kcal)</th>
                 </tr>
             </thead>
