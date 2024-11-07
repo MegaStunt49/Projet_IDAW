@@ -20,7 +20,7 @@ if(isset($_SERVER['PATH_INFO'])) {
 
 function get_aliments($db, $id) {
     if(isset($id) && $id != '') {
-        $sql = "SELECT aliment.id_aliment, aliment.libelle, type_d_aliment.libelle AS type_aliment  FROM aliment, type_d_aliment 
+        $sql = "SELECT aliment.id_aliment, aliment.libelle, type_d_aliment.libelle AS type_aliment, aliment.id_type_aliment FROM aliment, type_d_aliment 
         WHERE aliment.id_aliment=:id AND aliment.id_type_aliment = type_d_aliment.id_type_aliment"; 
         $exe = $db->prepare($sql);
     
@@ -33,7 +33,7 @@ function get_aliments($db, $id) {
             http_response_code(500);
         }
     } else {
-        $sql = "SELECT aliment.id_aliment, aliment.libelle, type_d_aliment.libelle AS type_aliment FROM aliment, type_d_aliment 
+        $sql = "SELECT aliment.id_aliment, aliment.libelle, type_d_aliment.libelle AS type_aliment, aliment.id_type_aliment FROM aliment, type_d_aliment 
         WHERE aliment.id_type_aliment = type_d_aliment.id_type_aliment";
 
         $exe = $db->query($sql); 
