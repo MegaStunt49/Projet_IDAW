@@ -81,6 +81,7 @@
                 <td><input type="submit" value="Mettre à jour" /></td>
             </tr>
         </table>
+        <a type="button" class="cancel btn" href="profil.php">Cancel</a> 
     </form>
 </div>
 <div class="log-container" id="log-container">

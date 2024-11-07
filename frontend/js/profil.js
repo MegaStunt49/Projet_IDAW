@@ -80,7 +80,7 @@ function onFormSubmit() {
     event.preventDefault();
     const prefix = $('#config').data('api-prefix');
 
-    let login = $("#loginF").val();
+    let login = $("#loginF").text();
     let password = $("#passwordF").val();
     let pseudo = $("#pseudoF").val();
     let email = $("#mail").val();
@@ -108,7 +108,7 @@ function onFormSubmit() {
         }),
         success: function(response) {
             showLogMessage('Utilisateur mis à jour avec succès');
-            
+            location.href = `${prefix}/frontend/profil.php`;
         },
         error: function(xhr, status, error) {
             showLogMessage('Erreur: Impossible de mettre à jour l\'utilisateur');
