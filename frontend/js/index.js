@@ -3,6 +3,23 @@ $(document).ready( function () {
     const pie_chart_data = [];
     let request=0;
 
+    //Ajoute le pseudo de l'utilisateur courant
+    $.ajax({
+        url: `${prefix}/backend/auth.php/self`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(login_data) {
+            $.ajax({
+                url: `${prefix}/backend/users.php/login/${login_data.login}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function(username_data) {
+                    $('#username-holder').text(username_data[0].pseudo);
+                }
+            });
+        }
+    });
+
     //Rempli les types d'ailments
     $.ajax({
         url: `${prefix}/backend/repas.php/self`,
@@ -35,7 +52,7 @@ $(document).ready( function () {
             }
         },
     });
-
+    
 });
 
 const columns = ["name", "value"];

@@ -18,7 +18,7 @@
 
 <div id="main">
     <h1>iMangerMieux</h1>
-    <p>Bienvenue, <span id="username-holder"></span></p>
+    <p class="large-text">Bienvenue, <span id="username-holder"></span></p>
     <div class="section">
         <h2 class="section-title">Consommation des types d'aliments sur <span id="periode-holder">7 jours</span></h2>
         <div class="horizontal-container">
