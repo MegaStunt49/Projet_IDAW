@@ -39,7 +39,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nom</th>
-                            <th scope="col">Quantité</th>
+                            <th scope="col">Quantité(g)</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -54,7 +54,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nom</th>
-                            <th scope="col">Quantité</th>
+                            <th scope="col">Quantité(g)</th>
                         </tr>
                     </thead>
                     <tbody id="addedAlimentsTableBody">

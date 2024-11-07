@@ -42,9 +42,9 @@ $(document).ready( function () {
             { data: 'libelle', title: 'Nom' },
             {
                 data: null,
-                title: 'Quantité',
+                title: 'Quantité(g)',
                 render: function (data, type, row) {
-                    return `<input type="text" class="quantite" id="quantite">`;
+                    return `<input type="text" class="quantite" id="quantiteInput">`;
                 }
             },
             {
@@ -108,18 +108,13 @@ function onFormSubmit() {
 }
 
 function add_aliment(button) {
-    const prefix = $('#config').data('api-prefix');
+    let table1 = $('#table1').DataTable();
     let table = $('#table2').DataTable();
     let row = $(button).closest('tr');
-    let id_aliment = table.row(row).data().id_aliment;
-    let libelle = table.row(row).data().libelle;
+    let id_aliment = table1.row(row).data().id_aliment;
+    let libelle = table1.row(row).data().libelle;
+    let quantite = row.find('#quantiteInput').val();
 
-    table.row.add([
-            counter + '.1',
-            counter + '.2',
-            counter + '.3',
-            counter + '.4',
-            counter + '.5'
-        ])
-        .draw(false);
+    table.row.add([id_aliment,libelle,quantite]).draw(false);
+    row.find('#quantiteInput').val("");
 }
