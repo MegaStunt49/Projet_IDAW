@@ -56,6 +56,14 @@ function is_admin() {
     return false;
 }
 
+function get_current_login() {
+    session_start();
+    if (isset($_SESSION['login'])) {
+        return $_SESSION["login"];
+    }
+    return false;
+}
+
 setHeaders();
 
 switch($_SERVER["REQUEST_METHOD"]) {
@@ -69,6 +77,11 @@ switch($_SERVER["REQUEST_METHOD"]) {
             case 'is-admin':
                 $result = is_admin();
                 echo json_encode(["is_admin" => $result]);
+                exit;
+
+            case 'self':
+                $result = get_current_login();
+                echo json_encode(["login" => $result]);
                 exit;
 
             default:
