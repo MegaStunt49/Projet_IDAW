@@ -33,6 +33,19 @@
             </p>
         </div>
     </div>
+    <div class="section">
+        <h2 class="section-title">Apports caloriques et nutriments sur <span id="periode-holder">7 jours</span></h2>
+        <div class="horizontal-container">
+            <span id="apports-energie-chart" style="flex:1"></span>
+            <p style="flex:1">Apports energétiques recommandés par l'oms :.
+            </p>
+        </div>
+        <div class="horizontal-container">
+            <span id="nutriments-chart" style="flex:1"></span>
+            <p style="flex:1">Apports en nutriments recommandés par l'oms :.
+            </p>
+        </div>
+    </div>
 </div>
 <?php 
     require_once("templates/template_footer.php");
