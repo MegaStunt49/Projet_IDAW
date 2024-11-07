@@ -324,6 +324,7 @@ DELETE /prefix/aliments.php/1 HTTP/1.1
 Fetches repas information. There are two ways to retrieve data:
 1. By repas ID (`/repas.php/id/{id}`) : gets the repas with corresponding id.
 2. By login (`/repas.php/login/{login}`) : gets all repas from the user corresponding to login.
+3. Self (`/repas.php/self`) : Same as login but automatically fetch the user's login.
 
 **Request**
 
@@ -345,9 +346,13 @@ GET /prefix/repas.php/id/1 HTTP/1.1
 
 ```json
 {
+    "libelle": "Tomate",
     "id_repas": 1,
     "login": "test",
-    "date_heure": "2023-10-01 12:00:00"
+    "date_heure": "2023-10-01 12:00:00",
+    "quantite": "20.0",
+    "energie": "1.03",
+    "id_aliment": 1
 }
 ```
 
