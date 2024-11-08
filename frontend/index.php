@@ -35,9 +35,9 @@
             </div>
         </div>
         <div class="section">
-            <h2 class="section-title">Apports caloriques et nutriments sur <span id="periode-holder-2">7 jours</span></h2>
+            <h2 class="section-title">Apports caloriques et nutriments sur <select id="periode-holder-2" onchange="updateBarChart()"><option value="7">7</option><option value="30">30</option><option value="30">365</option></select> jours</h2>
             <div class="horizontal-container">
-                <div id="apport-energie-chart"></div>
+                <span id="apport-energie-chart" style="flex:1"></span>
                 <p style="flex:1">
                     Apports energétiques recommandés par l'oms :
                 </p>
