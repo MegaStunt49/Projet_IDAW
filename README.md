@@ -13,3 +13,5 @@
 &emsp;Lancez la page web /backend/init_db.php, puis /backend/sql/filling_database/fill_db.php pour remplir la base de données
 
 Le site web est prêt !
+
+&emsp;Lancez la page web /frontend/inedx.php pour commencer !
