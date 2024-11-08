@@ -36,7 +36,7 @@
             <div class="section" style="flex: 1">
                 <h2 class="section-title">Modifier les apports nutritionnels</h2>
                 <div>
-                    <select id="caracSelect" name="carac" required>
+                    <select id="caracSelect" name="carac" onchange="changeCaracSelect()" required>
                     </select>
                     <p><input type="text" id="quantite-input"> <span id="unite"></span></p>
                 </div>

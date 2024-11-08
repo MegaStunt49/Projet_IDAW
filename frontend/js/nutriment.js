@@ -50,6 +50,8 @@ $(document).ready( function () {
                         text: item.libelle
                     }).appendTo(caracSelect);
                 });
+                $("#caracSelect").val(1);
+                changeCaracSelect();
             }
         }
     });
@@ -76,34 +78,35 @@ $(document).ready( function () {
             }
         ]
     });
-
-    $('#caracSelect').change(function() {
-        const selectedText = $("#caracSelect option:selected").text();
-        const selectedValue = $("#caracSelect").val();
-
-        $.ajax({
-            url: `${prefix}/backend/references.php/caracteristique/${selectedValue}`,
-            method: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                $("#unite").text(`${data.nom_unite}`);
-            }
-        });
-
-        $.ajax({
-            url: `${prefix}/backend/nutriments.php/${id_aliment}/${selectedValue}`,
-            method: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                if (data.quantite) {
-                    $("#quantite-input").val(`${data.quantite}`);
-                } else {
-                    $("#quantite-input").val('');
-                }
-            }
-        });
-    });
 });
+
+function changeCaracSelect() {
+    const prefix = $('#config').data('api-prefix');
+    const id_aliment = (new URLSearchParams(window.location.search)).get('id');
+    const selectedValue = $("#caracSelect").val();
+
+    $.ajax({
+        url: `${prefix}/backend/references.php/caracteristique/${selectedValue}`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            $("#unite").text(`${data.nom_unite}`);
+        }
+    });
+
+    $.ajax({
+        url: `${prefix}/backend/nutriments.php/${id_aliment}/${selectedValue}`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            if (data.quantite) {
+                $("#quantite-input").val(`${data.quantite}`);
+            } else {
+                $("#quantite-input").val('');
+            }
+        }
+    });
+}
 
 function showLogMessage(message, id) {
     $(`#log-paragraph-${id}`).html(message).fadeIn();
