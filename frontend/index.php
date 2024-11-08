@@ -17,7 +17,7 @@
 <script src="js/index.js"></script>
 
 <div id="main">
-    <h1>iMangerMieux</h1>
+    <h1><img src="imgs/oeuf.png" alt="Logo de iMangerMieux"> i-MangerMieux</h1>
     <p class="large-text">Bienvenue, <span id="username-holder"></span></p>
     <div class="vertical-container">   
         <div class="section">
