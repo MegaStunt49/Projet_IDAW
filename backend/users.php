@@ -1,11 +1,11 @@
 <?php
 require_once("init_pdo.php");
 
-// function setHeaders() {
-//     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
-//     header("Access-Control-Allow-Origin: *");
-//     header('Content-type: application/json; charset=utf-8');
-// }
+function setHeaders() {
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+    header("Access-Control-Allow-Origin: *");
+    header('Content-type: application/json; charset=utf-8');
+}
 
 if(isset($_SERVER['PATH_INFO'])) {
     $cleanedString = trim($_SERVER['PATH_INFO'], '/');
@@ -185,7 +185,7 @@ function delete_user($db, $login) {
 switch($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
         $result = get_users($pdo, $inputArray[0]);
-        // setHeaders();
+        setHeaders();
         echo json_encode($result);
         exit;
         
