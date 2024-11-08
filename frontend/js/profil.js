@@ -114,7 +114,7 @@ function onFormSubmit() {
         }),
         success: function(response) {
             showLogMessage('Utilisateur mis à jour avec succès');
-            location.href = `${prefix}/frontend/profil.php`;
+            location.href = `profil.php`;
         },
         error: function(xhr, status, error) {
             showLogMessage('Erreur: Impossible de mettre à jour l\'utilisateur');

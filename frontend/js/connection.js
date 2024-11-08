@@ -85,7 +85,7 @@ function onInscriptionFormSubmit() {
                 success: function(response) {
                     if (response && response.connected) {
                         showLogMessage('Connection réalisée avec succès');
-                        location.href = `${prefix}/frontend/index.php`;
+                        location.href = `index.php`;
                     } else {
                         showLogMessage("Mot de passe ou Login incorrect");
                     };
@@ -116,7 +116,7 @@ function onConnectionFormSubmit() {
         success: function(response) {
             if (response && response.connected) {
                 showLogMessage('Connection réalisée avec succès');
-                location.href = `${prefix}/frontend/index.php`;
+                location.href = `index.php`;
             } else {
                 showLogMessage("Mot de passe ou Login incorrect");
             };
