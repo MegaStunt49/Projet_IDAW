@@ -21,7 +21,7 @@
     <p class="large-text">Bienvenue, <span id="username-holder"></span></p>
     <div class="vertical-container">   
         <div class="section">
-            <h2 class="section-title">Consommation des types d'aliments sur <span id="periode-holder-1">7 jours</span></h2>
+            <h2 class="section-title">Consommation des types d'aliments sur <select id="periode-holder-1" onchange="updatePieChart()"><option value="7">7</option><option value="30">30</option><option value="30">365</option></select> jours</h2>
             <div class="horizontal-container">
                 <span id="aliment-type-chart" style="flex:1"></span>
                 <p style="flex:1" class="large-text">Au petit-déjeuner, il est conseillé de privilégier des aliments riches en fibres comme les céréales complètes, 
@@ -37,18 +37,10 @@
         <div class="section">
             <h2 class="section-title">Apports caloriques et nutriments sur <span id="periode-holder-2">7 jours</span></h2>
             <div class="horizontal-container">
-                <div class="vertical-container" style="flex:1">
-                    <span id="apports-energie-chart" style="flex:1"></span>
-                    <p style="flex:1">
-                        Apports energétiques recommandés par l'oms :
-                    </p>
-                </div>
-                <div class="vertical-container" style="flex:1">
-                    <span id="nutriments-chart" style="flex:1"></span>
-                    <p style="flex:1">
-                        Apports en nutriments recommandés par l'oms :
-                    </p>
-                </div>
+                <div id="apport-energie-chart"></div>
+                <p style="flex:1">
+                    Apports energétiques recommandés par l'oms :
+                </p>
             </div>
         </div>
     </div>
