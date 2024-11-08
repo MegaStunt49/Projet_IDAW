@@ -1,5 +1,3 @@
-/backend/config.php
-/frontend/config.php
 *.yaml
 Dockerfile
 .dockerignore
